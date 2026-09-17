@@ -21,6 +21,18 @@ html[data-bg-scene="forest"] #theme-bg-scene { background:repeating-linear-gradi
 html[data-bg-scene="hologram"] #theme-bg-scene { background:repeating-linear-gradient(90deg, transparent 0 92px, rgba(143,252,255,.1) 93px 95px), #02050d; }
 html[data-theme-group="neon"] body { text-shadow:0 0 18px color-mix(in srgb, var(--accent) 18%, transparent); }
 html[data-theme-group="futuristic"] .card { backdrop-filter:blur(10px); border-style:double; }
+#gate { position:fixed; inset:0; z-index:4000; display:flex; align-items:center; justify-content:center; background:radial-gradient(circle at 20% 10%, rgba(0,255,136,.12), transparent 28%), linear-gradient(160deg,#050912,#08121d 55%,#050912); padding:20px; }
+#gate.hidden { display:none; }
+.gate-box { width:min(420px,94vw); background:var(--card); border:1px solid var(--border); border-radius:18px; padding:28px 24px; box-shadow:0 0 40px rgba(0,255,136,.12); }
+.gate-kicker { font-size:10px; letter-spacing:4px; color:var(--accent); margin-bottom:10px; }
+.gate-box h1 { font-family:var(--title); font-size:clamp(1.6rem,6vw,2.2rem); line-height:1.1; margin-bottom:10px; }
+.gate-box h1 span { color:var(--accent); }
+.gate-box p { color:var(--muted); font-size:12px; margin-bottom:18px; }
+.gate-row { display:flex; gap:8px; flex-wrap:wrap; }
+#gate-pass { flex:1; min-width:160px; background:var(--bg3); border:1px solid var(--border); border-radius:10px; color:var(--text); padding:12px 14px; font-family:var(--mono); font-size:14px; outline:none; }
+#gate-pass:focus { border-color:var(--accent); }
+#gate-go { background:var(--accent); color:#061018; border:none; border-radius:10px; padding:12px 18px; font-family:var(--mono); font-weight:700; cursor:pointer; }
+#gate-err { display:none; color:#f66; font-size:11px; margin-top:10px; }
 #menu-btn, #settings-btn { position:fixed; top:1rem; z-index:1000; background:var(--bg2); border:1px solid var(--border); color:var(--muted); width:40px; height:40px; border-radius:8px; cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center; }
 #menu-btn { left:1rem; }
 #settings-btn { left:4rem; }
@@ -78,6 +90,7 @@ section { position:relative; z-index:1; max-width:920px; margin:0 auto; padding:
 .file-token { position:absolute; z-index:5; width:54px; height:54px; border-radius:12px; background:rgba(8,13,24,.86); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:28px; cursor:grab; user-select:none; touch-action:none; }
 .file-token:active { cursor:grabbing; }
 .file-token.lock { border-color:#f66; box-shadow:0 0 16px rgba(255,102,102,.25); }
+.file-token.fly { transition:left .75s ease, top .75s ease; pointer-events:none; }
 #cloud-msg { min-height:42px; margin-top:10px; font-size:12px; color:var(--muted); line-height:1.6; }
 footer { position:relative; z-index:1; text-align:center; padding:3rem 1rem 4rem; color:var(--muted); font-size:12px; }
 footer span { color:var(--accent); }
@@ -93,6 +106,18 @@ footer span { color:var(--accent); }
 <body>
 <canvas id="bg-canvas"></canvas>
 <div id="theme-bg-scene" aria-hidden="true"></div>
+<div id="gate">
+  <div class="gate-box">
+    <div class="gate-kicker">PORTFOLIO · ACCESSO</div>
+    <h1>Mario S.<br><span>digitale</span></h1>
+    <p>Sito personale protetto. Inserisci la password per entrare.</p>
+    <div class="gate-row">
+      <input id="gate-pass" type="password" placeholder="Password" autocomplete="off">
+      <button id="gate-go" onclick="tryUnlock()">Entra</button>
+    </div>
+    <div id="gate-err">Password errata.</div>
+  </div>
+</div>
 <button id="menu-btn" onclick="toggleMenu()" title="Apri menu">☰</button>
 <button id="settings-btn" onclick="toggleSettings()" title="Impostazioni">⚙️</button>
 <div id="settings-overlay" onclick="toggleSettings()"></div>
@@ -151,10 +176,10 @@ footer span { color:var(--accent); }
 <section id="cloud">
   <div class="section-label">03 — CLOUD</div>
   <div class="section-title">☁️ Cloud</div>
-  <div class="section-bridge">Il Cloud è spazio su internet. I file locali restano su un solo dispositivo; con la sfera accesa lo stesso file viaggia tra laptop, telefono e tablet.</div>
+  <div class="section-bridge">Il Cloud è spazio su internet. I file locali restano su un solo dispositivo; con la sfera accesa lo stesso file viaggia tra laptop, telefono e tablet. Se lo lasci sulla nuvola, viene portato sul PC.</div>
   <div class="card">
     <h3>Sfera interattiva</h3>
-    <p>Trascina il <strong>📁 File</strong>. Cloud <strong>ON</strong>: passa dalla sfera ☁️. Cloud <strong>OFF</strong>: tocca il confine e diventa 🔒.</p>
+    <p>Trascina il <strong>📁 File</strong>. Cloud <strong>ON</strong>: passa dalla sfera ☁️ e, se resta sulla nuvola, viene portato sul PC. Cloud <strong>OFF</strong>: tocca il confine e diventa 🔒.</p>
   </div>
   <div class="cloud-wrap">
     <div class="cloud-top">
@@ -189,6 +214,14 @@ footer span { color:var(--accent); }
   <p style="margin-top:6px">Portfolio personale · marios241.github</p>
 </footer>
 <script>
+const GATE_PASSWORD = 'marios241.github';
+function tryUnlock(){
+  const inp = document.getElementById('gate-pass');
+  const v = ((inp&&inp.value)||'').trim();
+  if(v === GATE_PASSWORD){ document.getElementById('gate').classList.add('hidden'); }
+  else { document.getElementById('gate-err').style.display='block'; if(inp) inp.value=''; }
+}
+document.getElementById('gate-pass').addEventListener('keydown', e=>{ if(e.key==='Enter') tryUnlock(); });
 function toggleMenu(){ const o=document.getElementById('side-menu').classList.toggle('open'); document.getElementById('overlay').classList.toggle('show',o); }
 function closeMenu(){ document.getElementById('side-menu').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
 const THEMES = {
@@ -325,7 +358,7 @@ function animSphere(){
   requestAnimationFrame(animSphere);
 }
 
-let cloudOn=true, fileDevice='laptop', dragState=null, lockTimer=null;
+let cloudOn=true, fileDevice='laptop', dragState=null, lockTimer=null, deliverTimer=null;
 const DEV_NAMES={laptop:'Laptop', phone:'Telefono', tablet:'Tablet'};
 const LOCK_MSG='🔒 I file locali non possono essere trasferiti da dispositivo a dispositivo senza un collegamento fisico tramite chiavetta USB o cavo';
 function setMsg(t){ const m=document.getElementById('cloud-msg'); if(m) m.textContent=t; }
@@ -359,7 +392,7 @@ function stagePos(e){ const s=document.getElementById('cloud-stage').getBounding
 function pointIn(el, sp){ const s=document.getElementById('cloud-stage').getBoundingClientRect(); const r=el.getBoundingClientRect(); return sp.x>=r.left-s.left && sp.x<=r.right-s.left && sp.y>=r.top-s.top && sp.y<=r.bottom-s.top; }
 function bindFile(f){
   f.addEventListener('pointerdown', e=>{
-    if(lockTimer) return;
+    if(lockTimer || deliverTimer) return;
     const sp=stagePos(e);
     dragState={ ox:sp.x-f.offsetLeft, oy:sp.y-f.offsetTop, warned:false };
     try{ f.setPointerCapture(e.pointerId); }catch(err){}
@@ -389,6 +422,27 @@ function showLock(){
   f.classList.add('lock'); f.textContent='🔒'; setMsg(LOCK_MSG);
   lockTimer=setTimeout(()=>{ f.classList.remove('lock'); f.textContent='📁'; lockTimer=null; }, 2800);
 }
+function deliverToPc(){
+  const f=document.getElementById('file-token');
+  if(!f || !cloudOn) return;
+  fileDevice='hub';
+  placeFile();
+  setMsg('☁️ File sulla nuvola... viene portato sul PC.');
+  clearTimeout(deliverTimer);
+  deliverTimer=setTimeout(()=>{
+    const pc=centerOf(document.getElementById('dev-laptop'));
+    f.classList.add('fly');
+    f.style.left=(pc.x-27)+'px';
+    f.style.top=(pc.y-16)+'px';
+    deliverTimer=setTimeout(()=>{
+      f.classList.remove('fly');
+      fileDevice='laptop';
+      placeFile();
+      deliverTimer=null;
+      setMsg('📁 File portato dal Cloud sul PC (Laptop). Ora è sul dispositivo.');
+    }, 760);
+  }, 700);
+}
 function endDrag(e){
   if(!dragState) return;
   const sp=stagePos(e);
@@ -397,8 +451,9 @@ function endDrag(e){
     let hit=null;
     ['laptop','phone','tablet'].forEach(id=>{ if(pointIn(document.getElementById('dev-'+id), sp)) hit=id; });
     if(pointIn(hub, sp) && !hit){
-      fileDevice='hub';
-      setMsg('📁 File su ☁️ Cloud: raggiungibile da laptop, telefono e tablet.');
+      dragState=null;
+      deliverToPc();
+      return;
     } else if(hit){
       const from=fileDevice; fileDevice=hit;
       setMsg(from==='hub' ? ('📁 File scaricato dal Cloud su '+DEV_NAMES[hit]+'.') : ('📁 File trasferito via Cloud: '+DEV_NAMES[from]+' → '+DEV_NAMES[hit]+'.'));
@@ -409,11 +464,12 @@ function endDrag(e){
   dragState=null; placeFile();
 }
 function toggleCloud(){
+  if(deliverTimer) return;
   cloudOn=!cloudOn;
   document.getElementById('cloud-toggle').textContent = cloudOn?'☁️ Cloud: ON':'☁️ Cloud: OFF';
   document.getElementById('cloud-hub').classList.toggle('on', cloudOn);
   drawLines();
-  setMsg(cloudOn ? 'Cloud attivo: il 📁 File può viaggiare tra i dispositivi tramite la sfera ☁️.' : 'Cloud spento: file locali. Prova a trascinare 📁 fuori dal dispositivo.');
+  setMsg(cloudOn ? 'Cloud attivo: il 📁 File può viaggiare tra i dispositivi. Se lo lasci sulla nuvola, viene portato sul PC.' : 'Cloud spento: file locali. Prova a trascinare 📁 fuori dal dispositivo.');
 }
 applyTheme(currentTheme);
 initParticles();
