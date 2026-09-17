@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Mario S. · Portfolio</title>
+<link rel="icon" href="data:,">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root { --accent:#00ff88; --accent2:#0af; --bg:#060a10; --bg2:#0d1421; --bg3:#111c2e; --text:#e8f4fd; --muted:#6a8aaa; --border:rgba(0,255,136,.18); --card:rgba(13,20,33,.92); --mono:'Space Mono',monospace; --title:'Syne',sans-serif; }
+* { box-sizing:border-box; margin:0; padding:0; min-width:0; }
+html { scroll-behavior:smooth; overflow-x:hidden; }
+body { background:var(--bg); color:var(--text); font-family:var(--mono); font-size:clamp(14px,1.2vw,18px); line-height:1.7; overflow-x:hidden; }
+#bg-canvas { position:fixed; inset:0; width:100%; height:100%; z-index:0; pointer-events:none; opacity:.18; }
+#theme-bg-scene { position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0; transition:opacity .45s; }
+html[data-bg-scene] #theme-bg-scene { opacity:.5; }
+html[data-bg-scene="galaxy"] #theme-bg-scene { background:radial-gradient(circle at 20% 24%, rgba(191,136,255,.45), transparent 18rem), linear-gradient(135deg,#04020d,#16082e 52%,#05020f); }
+html[data-bg-scene="ocean"] #theme-bg-scene { background:radial-gradient(ellipse at 50% 120%, rgba(0,212,255,.38), transparent 38rem), linear-gradient(180deg,#032b4a,#041729 48%,#020914); }
+html[data-bg-scene="sunset"] #theme-bg-scene { background:radial-gradient(circle at 50% 42%, rgba(255,205,92,.5), transparent 9rem), linear-gradient(180deg,#341044,#ba3854 45%,#ff8a3d 66%,#130711); }
+html[data-bg-scene="forest"] #theme-bg-scene { background:repeating-linear-gradient(105deg, transparent 0 46px, rgba(67,221,119,.16) 47px 50px), #031008; }
+html[data-bg-scene="hologram"] #theme-bg-scene { background:repeating-linear-gradient(90deg, transparent 0 92px, rgba(143,252,255,.1) 93px 95px), #02050d; }
+html[data-theme-group="neon"] body { text-shadow:0 0 18px color-mix(in srgb, var(--accent) 18%, transparent); }
+html[data-theme-group="futuristic"] .card { backdrop-filter:blur(10px); border-style:double; }
+#menu-btn, #settings-btn { position:fixed; top:1rem; z-index:1000; background:var(--bg2); border:1px solid var(--border); color:var(--muted); width:40px; height:40px; border-radius:8px; cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center; }
+#menu-btn { left:1rem; }
+#settings-btn { left:4rem; }
+#overlay { position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:1198; display:none; }
+#overlay.show { display:block; }
+#side-menu { position:fixed; top:0; left:0; width:min(280px,86vw); height:100vh; background:linear-gradient(160deg,var(--bg2),var(--bg3)); border-right:1px solid var(--border); z-index:1199; padding:64px 18px 24px; transform:translateX(-110%); transition:transform .28s; }
+#side-menu.open { transform:translateX(0); }
+#menu-close { position:absolute; top:14px; right:14px; background:none; border:none; color:var(--muted); font-size:22px; cursor:pointer; }
+#side-menu h3 { font-family:var(--title); margin-bottom:14px; }
+.menu-item { display:flex; align-items:center; gap:10px; color:var(--text); text-decoration:none; padding:10px 8px; border-radius:8px; font-size:13px; }
+.menu-item:hover { background:var(--bg3); color:var(--accent); }
+#settings-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:1998; }
+#settings-panel { display:none; position:fixed; top:0; right:0; width:min(340px,92vw); height:100vh; background:linear-gradient(160deg,var(--bg2),var(--bg3)); border-left:1px solid var(--border); z-index:1999; overflow-y:auto; transform:translateX(18px); opacity:0; transition:transform .24s, opacity .24s; }
+#settings-panel.open { transform:none; opacity:1; }
+.theme-mode-switch { display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; margin-bottom:10px; }
+.theme-mode-btn { background:var(--bg3); border:1px solid var(--border); color:var(--muted); padding:8px 6px; border-radius:8px; cursor:pointer; font-family:var(--mono); font-size:10px; letter-spacing:1px; }
+.theme-mode-btn.active { background:var(--accent); color:#061018; border-color:var(--accent); }
+.theme-btn { background:var(--bg3); border:1px solid var(--border); color:var(--muted); padding:8px 12px; border-radius:8px; cursor:pointer; font-family:var(--mono); font-size:12px; }
+.bg-slider { display:grid; grid-template-columns:86px 1fr 34px; gap:8px; align-items:center; margin:8px 0; font-size:11px; color:var(--muted); }
+#hero { position:relative; z-index:1; min-height:78vh; display:flex; flex-direction:column; justify-content:center; padding:5rem 1.25rem 3rem; max-width:920px; margin:0 auto; }
+.hero-eyebrow { font-size:11px; letter-spacing:4px; color:var(--accent); margin-bottom:14px; }
+#hero h1 { font-family:var(--title); font-size:clamp(2.1rem,8vw,4.4rem); line-height:.95; font-weight:800; }
+#hero h1 span { color:var(--accent); }
+.hero-sub { max-width:540px; color:var(--muted); margin-top:16px; }
+.scroll-hint { margin-top:2.5rem; font-size:11px; letter-spacing:4px; color:var(--muted); }
+section { position:relative; z-index:1; max-width:920px; margin:0 auto; padding:4.5rem 1.25rem 2.8rem; }
+.section-label { font-size:11px; letter-spacing:3px; color:var(--accent); margin-bottom:8px; }
+.section-title { font-family:var(--title); font-size:clamp(1.7rem,5vw,2.6rem); margin-bottom:10px; }
+.section-bridge { color:var(--muted); font-size:13px; margin-bottom:1.4rem; }
+.card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:18px; margin-bottom:12px; }
+.card h3 { font-family:var(--title); font-size:1.05rem; margin-bottom:8px; color:var(--accent); }
+.divider { text-align:center; color:var(--muted); opacity:.5; padding:.4rem 0; position:relative; z-index:1; }
+.fact-grid, .lang-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px; }
+.fact { background:var(--bg3); border:1px solid var(--border); border-radius:12px; padding:14px; }
+.fact b { display:block; color:var(--accent); font-size:11px; letter-spacing:2px; margin-bottom:6px; }
+.lang-chip { background:var(--bg3); border:1px solid var(--border); border-radius:12px; padding:16px; text-align:center; }
+.lang-chip strong { display:block; font-family:var(--title); font-size:1.2rem; }
+.cloud-wrap { background:var(--bg2); border:1px solid var(--border); border-radius:16px; padding:16px; overflow:hidden; }
+.cloud-top { display:flex; justify-content:space-between; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:12px; }
+.cloud-toggle { display:flex; align-items:center; gap:8px; background:var(--bg3); border:1px solid var(--border); border-radius:999px; padding:8px 12px; cursor:pointer; font-family:var(--mono); color:var(--text); }
+.cloud-stage { position:relative; min-height:460px; background:radial-gradient(circle at 50% 48%, rgba(0,170,255,.08), transparent 32%), var(--bg3); border:1px dashed var(--border); border-radius:14px; overflow:hidden; }
+.device { position:absolute; width:150px; height:118px; border:2px solid #8a97a8; border-radius:16px; background:rgba(138,151,168,.08); display:flex; flex-direction:column; align-items:center; padding:10px; color:#c5ced8; z-index:3; }
+.device svg { width:42px; height:42px; fill:none; stroke:#8a97a8; stroke-width:1.7; }
+.device span { font-size:11px; margin-top:6px; letter-spacing:1px; }
+#dev-laptop { left:18px; top:28px; }
+#dev-phone { left:18px; bottom:28px; }
+#dev-tablet { right:18px; top:50%; transform:translateY(-50%); }
+.cloud-hub { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:150px; height:150px; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; border:2px solid #7a8796; background:rgba(122,135,150,.08); z-index:2; text-align:center; overflow:hidden; }
+.cloud-hub.on { border-color:#3aa0ff; box-shadow:0 0 34px rgba(58,160,255,.4); background:rgba(58,160,255,.12); }
+#sphere-canvas { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+.cloud-hub .hub-label { position:relative; z-index:2; font-size:10px; letter-spacing:2px; color:var(--muted); margin-top:4px; }
+.cloud-hub.on .hub-label { color:#9ad4ff; }
+.link-line { position:absolute; height:2px; background:#7a8796; z-index:1; transform-origin:left center; opacity:.7; }
+.link-line.on { background:#3aa0ff; box-shadow:0 0 10px rgba(58,160,255,.55); }
+.file-token { position:absolute; z-index:5; width:54px; height:54px; border-radius:12px; background:rgba(8,13,24,.86); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:28px; cursor:grab; user-select:none; touch-action:none; }
+.file-token:active { cursor:grabbing; }
+.file-token.lock { border-color:#f66; box-shadow:0 0 16px rgba(255,102,102,.25); }
+#cloud-msg { min-height:42px; margin-top:10px; font-size:12px; color:var(--muted); line-height:1.6; }
+footer { position:relative; z-index:1; text-align:center; padding:3rem 1rem 4rem; color:var(--muted); font-size:12px; }
+footer span { color:var(--accent); }
+@media (max-width:700px) {
+  .cloud-stage { min-height:580px; }
+  #dev-laptop { left:12px; top:16px; width:132px; }
+  #dev-phone { left:12px; bottom:16px; width:132px; }
+  #dev-tablet { right:12px; top:auto; bottom:170px; transform:none; width:132px; }
+  .cloud-hub { width:128px; height:128px; }
+}
+</style>
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+<div id="theme-bg-scene" aria-hidden="true"></div>
+<button id="menu-btn" onclick="toggleMenu()" title="Apri menu">☰</button>
+<button id="settings-btn" onclick="toggleSettings()" title="Impostazioni">⚙️</button>
+<div id="settings-overlay" onclick="toggleSettings()"></div>
+<div id="settings-panel"></div>
+<div id="overlay" onclick="closeMenu()"></div>
+<nav id="side-menu">
+  <button id="menu-close" onclick="closeMenu()">✕</button>
+  <h3>Sezioni</h3>
+  <a class="menu-item" href="#about" onclick="closeMenu()"><span>👤</span> Abt Me</a>
+  <a class="menu-item" href="#experiences" onclick="closeMenu()"><span>💻</span> My experiences</a>
+  <a class="menu-item" href="#cloud" onclick="closeMenu()"><span>☁️</span> Cloud</a>
+  <a class="menu-item" href="#credits" onclick="closeMenu()"><span>❤️</span> Crediti</a>
+</nav>
+<div id="hero">
+  <div class="hero-eyebrow">PORTFOLIO PERSONALE</div>
+  <h1>Mario S.<br>in modo <span>digitale</span></h1>
+  <p class="hero-sub">Tre sezioni: chi sono, cosa sto imparando e una sfera interattiva sul Cloud. Stesso stile della tesina, ma questo sito è autonomo.</p>
+  <div class="scroll-hint">SCORRI</div>
+</div>
+<section id="about">
+  <div class="section-label">01 — ABT ME</div>
+  <div class="section-title">Chi sono</div>
+  <div class="section-bridge">Poche informazioni, chiare: identità, sport, famiglia e animali.</div>
+  <div class="card">
+    <h3>Mario S.</h3>
+    <p>Mi chiamo Mario S., ho 15 anni e pratico basket. Ho due fratelli, due cocorite e l'altro rainbow.</p>
+  </div>
+  <div class="fact-grid">
+    <div class="fact"><b>ETÀ</b>15 anni</div>
+    <div class="fact"><b>SPORT</b>Basket</div>
+    <div class="fact"><b>FAMIGLIA</b>Due fratelli</div>
+    <div class="fact"><b>ANIMALI</b>Due cocorite e l'altro rainbow</div>
+  </div>
+</section>
+<div class="divider">▼</div>
+<section id="experiences">
+  <div class="section-label">02 — MY EXPERIENCES</div>
+  <div class="section-title">Il mio percorso</div>
+  <div class="section-bridge">Linguaggi che sto imparando e perché ho scelto l'informatica.</div>
+  <div class="card">
+    <h3>Linguaggi conosciuti</h3>
+    <p>Ho iniziato un percorso di studio e conosco vari linguaggi di programmazione:</p>
+  </div>
+  <div class="lang-grid">
+    <div class="lang-chip"><strong>HTML</strong>struttura</div>
+    <div class="lang-chip"><strong>CSS</strong>stile</div>
+    <div class="lang-chip"><strong>Python</strong>logica</div>
+    <div class="lang-chip"><strong>JavaScript</strong>interattività</div>
+  </div>
+  <div class="card">
+    <h3>E in futuro anche altro...</h3>
+    <p>Ho scelto l'indirizzo d'Informatica Quadriennale per come si è notato cercando di imparare altre lingue e proseguire quelle iniziate, per poi usarle nei progetti personali come questo e la mia tesina delle medie.</p>
+  </div>
+</section>
+<div class="divider">▼</div>
+<section id="cloud">
+  <div class="section-label">03 — CLOUD</div>
+  <div class="section-title">☁️ Cloud</div>
+  <div class="section-bridge">Il Cloud è spazio su internet. I file locali restano su un solo dispositivo; con la sfera accesa lo stesso file viaggia tra laptop, telefono e tablet.</div>
+  <div class="card">
+    <h3>Sfera interattiva</h3>
+    <p>Trascina il <strong>📁 File</strong>. Cloud <strong>ON</strong>: passa dalla sfera ☁️. Cloud <strong>OFF</strong>: tocca il confine e diventa 🔒.</p>
+  </div>
+  <div class="cloud-wrap">
+    <div class="cloud-top">
+      <button class="cloud-toggle" id="cloud-toggle" onclick="toggleCloud()">☁️ Cloud: ON</button>
+      <span style="font-size:11px;color:var(--muted)">Trascina 📁 · clicca la sfera</span>
+    </div>
+    <div class="cloud-stage" id="cloud-stage">
+      <div class="cloud-hub on" id="cloud-hub" onclick="toggleCloud()">
+        <canvas id="sphere-canvas"></canvas>
+        <small class="hub-label">CLOUD</small>
+      </div>
+      <div class="device" id="dev-laptop"><svg viewBox="0 0 48 48"><rect x="10" y="10" width="28" height="18" rx="2"/><path d="M6 34h36l-3-5H9z"/></svg><span>LAPTOP</span></div>
+      <div class="device" id="dev-phone"><svg viewBox="0 0 48 48"><rect x="16" y="6" width="16" height="36" rx="3"/><path d="M22 38h4"/></svg><span>TELEFONO</span></div>
+      <div class="device" id="dev-tablet"><svg viewBox="0 0 48 48"><rect x="10" y="6" width="28" height="36" rx="3"/><path d="M21 38h6"/></svg><span>TABLET</span></div>
+    </div>
+    <div id="cloud-msg">Il file 📁 parte dal laptop. Accendi il Cloud per trasferirlo.</div>
+  </div>
+</section>
+<div class="divider">▼</div>
+<section id="credits">
+  <div class="section-label">04 — CREDITI</div>
+  <div class="section-title">Crediti</div>
+  <div class="card">
+    <h3>Realizzato da</h3>
+    <p><strong>Mario S.</strong> (MarioS241) — progetto, codice e contenuti.</p>
+    <p style="margin-top:8px">Stile ispirato alla tesina <em>Informatica in Modo Digitale</em>. Sito single-file, senza librerie esterne: solo HTML, CSS e JavaScript.</p>
+    <p style="margin-top:8px">GitHub: <strong>marios241.github</strong></p>
+  </div>
+</section>
+<footer>
+  <p>Made with <span>❤️</span> by <strong>MarioS</strong> · Anno scolastico 2026</p>
+  <p style="margin-top:6px">Portfolio personale · marios241.github</p>
+</footer>
+<script>
+function toggleMenu(){ const o=document.getElementById('side-menu').classList.toggle('open'); document.getElementById('overlay').classList.toggle('show',o); }
+function closeMenu(){ document.getElementById('side-menu').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
+const THEMES = {
+  default:{vars:{'--accent':'#00ff88','--accent2':'#0af','--bg':'#060a10','--bg2':'#0d1421','--bg3':'#111c2e','--text':'#e8f4fd','--muted':'#6a8aaa','--border':'rgba(0,255,136,.18)','--card':'rgba(13,20,33,.92)'},label:'🌿 Default',group:'classic'},
+  galaxy:{vars:{'--accent':'#bf88ff','--accent2':'#ff66cc','--bg':'#05030f','--bg2':'#100a20','--bg3':'#1a1035','--text':'#e8d8ff','--muted':'#8a6aaa','--border':'rgba(191,136,255,.2)','--card':'rgba(16,10,32,.95)'},label:'🌌 Galaxy',group:'classic',scene:'galaxy'},
+  ocean:{vars:{'--accent':'#00d4ff','--accent2':'#0066ff','--bg':'#020d18','--bg2':'#061a2e','--bg3':'#0a2540','--text':'#d0eeff','--muted':'#5588aa','--border':'rgba(0,212,255,.2)','--card':'rgba(6,26,46,.95)'},label:'🌊 Ocean',group:'classic',scene:'ocean'},
+  sunset:{vars:{'--accent':'#ff7a2a','--accent2':'#ff2266','--bg':'#100508','--bg2':'#1f0c10','--bg3':'#2d1218','--text':'#ffddd0','--muted':'#aa6655','--border':'rgba(255,122,42,.2)','--card':'rgba(31,12,16,.95)'},label:'🌅 Sunset',group:'classic',scene:'sunset'},
+  forest:{vars:{'--accent':'#44dd77','--accent2':'#aaff44','--bg':'#030a05','--bg2':'#071510','--bg3':'#0e2016','--text':'#d0ffd8','--muted':'#558866','--border':'rgba(68,221,119,.2)','--card':'rgba(7,21,16,.95)'},label:'🌲 Forest',group:'classic',scene:'forest'},
+  neonMint:{vars:{'--accent':'#00ffb7','--accent2':'#66f7ff','--bg':'#03070b','--bg2':'#07111a','--bg3':'#0d1b28','--text':'#edfffb','--muted':'#7da9b6','--border':'rgba(0,255,183,.36)','--card':'rgba(7,17,26,.88)'},label:'Neon Mint',group:'neon'},
+  neonViolet:{vars:{'--accent':'#d66bff','--accent2':'#00e5ff','--bg':'#07030d','--bg2':'#12091f','--bg3':'#201136','--text':'#f7eaff','--muted':'#a78abc','--border':'rgba(214,107,255,.36)','--card':'rgba(18,9,31,.88)'},label:'Neon Violet',group:'neon'},
+  neonSolar:{vars:{'--accent':'#fff200','--accent2':'#ff3d8b','--bg':'#080604','--bg2':'#151007','--bg3':'#24190a','--text':'#fff8df','--muted':'#b7a778','--border':'rgba(255,242,0,.35)','--card':'rgba(21,16,7,.88)'},label:'Neon Solar',group:'neon'},
+  cyberpunk:{vars:{'--accent':'#ff2bd6','--accent2':'#00f5ff','--bg':'#0a0212','--bg2':'#16052a','--bg3':'#24103f','--text':'#ffe9fb','--muted':'#b78acc','--border':'rgba(255,43,214,.36)','--card':'rgba(22,5,42,.9)'},label:'🌆 Cyberpunk',group:'neon'},
+  neonGrid:{vars:{'--accent':'#00f5ff','--accent2':'#ff2bd6','--bg':'#02030a','--bg2':'#071022','--bg3':'#0b1a36','--text':'#ecfbff','--muted':'#78a4c7','--border':'rgba(0,245,255,.28)','--card':'rgba(5,14,30,.9)'},label:'🧬 Neon Grid',group:'futuristic'},
+  hologram:{vars:{'--accent':'#8ffcff','--accent2':'#9a7cff','--bg':'#03070f','--bg2':'#071421','--bg3':'#10243a','--text':'#eefcff','--muted':'#8db8c2','--border':'rgba(143,252,255,.28)','--card':'rgba(7,20,33,.82)'},label:'🔮 Hologram',group:'futuristic',scene:'hologram'}
+};
+let currentTheme = localStorage.getItem('mario-theme') || 'default';
+if(!THEMES[currentTheme]) currentTheme='default';
+let currentMode = localStorage.getItem('mario-theme-mode') || THEMES[currentTheme].group;
+if(!['classic','neon','futuristic'].includes(currentMode)) currentMode='classic';
+function applyTheme(name){
+  const t = THEMES[name] || THEMES.default;
+  const root = document.documentElement;
+  Object.entries(t.vars).forEach(([k,v])=>root.style.setProperty(k,v));
+  root.dataset.theme = name;
+  root.dataset.themeGroup = t.group || 'classic';
+  if(t.scene) root.dataset.bgScene = t.scene; else root.removeAttribute('data-bg-scene');
+  currentTheme = name; currentMode = t.group || 'classic';
+  localStorage.setItem('mario-theme', name);
+  localStorage.setItem('mario-theme-mode', currentMode);
+  document.querySelectorAll('.theme-btn').forEach(b=>{ const a=b.dataset.theme===name; b.style.borderColor=a?'var(--accent)':'var(--border)'; b.style.color=a?'var(--accent)':'var(--muted)'; });
+  document.querySelectorAll('.theme-mode-btn').forEach(b=>b.classList.toggle('active', b.dataset.mode===currentMode));
+}
+function renderModes(){
+  return [['classic','CLASSICA'],['neon','NEON'],['futuristic','FUTURISTICA']].map(([g,l])=>`<button class="theme-mode-btn ${currentMode===g?'active':''}" data-mode="${g}" onclick="setMode('${g}')">${l}</button>`).join('');
+}
+function renderThemeGroup(g){
+  return Object.entries(THEMES).filter(([k,t])=>t.group===g).map(([k,t])=>`<button class="theme-btn" data-theme="${k}" onclick="applyTheme('${k}')">${t.label}</button>`).join('');
+}
+function setMode(g){ currentMode=g; localStorage.setItem('mario-theme-mode',g); const w=document.getElementById('mode-wrap'); const l=document.getElementById('theme-list'); if(w) w.innerHTML=renderModes(); if(l) l.innerHTML=renderThemeGroup(g); }
+const BG_DEF = { speed:1, brightness:65, size:1, quantity:60, opacity:18 };
+let bgS = (()=>{ try { return Object.assign({}, BG_DEF, JSON.parse(localStorage.getItem('mario-bg')||'{}')); } catch(e){ return Object.assign({}, BG_DEF); } })();
+function bgControlsHtml(){
+  return [['speed','Velocita',0.2,3,0.1],['brightness','Luminosita',15,120,5],['size','Grandezza',0.5,3,0.1],['quantity','Quantita',20,180,5],['opacity','Trasparenza',0,80,1]].map(([k,l,mn,mx,st])=>
+    `<label class="bg-slider"><span>${l}</span><input type="range" min="${mn}" max="${mx}" step="${st}" value="${bgS[k]}" oninput="setBg('${k}',this.value)"><b id="bg-${k}-val" style="color:var(--accent);text-align:right">${k==='quantity'?Math.round(bgS[k]):Number(bgS[k]).toFixed(1)}</b></label>`).join('');
+}
+function setBg(k,v){
+  if(!Object.prototype.hasOwnProperty.call(BG_DEF,k)) return;
+  const n=parseFloat(v); bgS[k]=Number.isFinite(n)?n:BG_DEF[k];
+  try{ localStorage.setItem('mario-bg', JSON.stringify(bgS)); }catch(e){}
+  const lbl=document.getElementById('bg-'+k+'-val'); if(lbl) lbl.textContent = k==='quantity'?Math.round(bgS[k]):Number(bgS[k]).toFixed(1);
+  const c=document.getElementById('bg-canvas'); if(c) c.style.opacity = Math.max(0, Math.min(80, bgS.opacity))/100;
+  if(k==='quantity'||k==='size'||k==='speed') initParticles();
+}
+function buildSettingsPanel(){
+  const p=document.getElementById('settings-panel');
+  if(!p) return;
+  p.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;padding:16px 20px 0"><span style="font-family:var(--title);font-weight:700">⚙️ Impostazioni</span><button onclick="toggleSettings()" style="background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer">✕</button></div><div style="padding:16px 20px"><div style="font-size:10px;letter-spacing:3px;color:var(--accent);margin-bottom:10px">🎨 TEMI</div><div id="mode-wrap" class="theme-mode-switch">${renderModes()}</div><div id="theme-list" style="display:flex;flex-wrap:wrap;gap:8px">${renderThemeGroup(currentMode)}</div><div style="font-size:10px;letter-spacing:3px;color:var(--accent);margin:18px 0 8px">BACKGROUND</div>${bgControlsHtml()}</div>`;
+  applyTheme(currentTheme);
+}
+function toggleSettings(){
+  const p=document.getElementById('settings-panel'); const o=document.getElementById('settings-overlay');
+  if(!p) return;
+  if(p.classList.contains('open')){ p.classList.remove('open'); if(o) o.style.display='none'; setTimeout(()=>{ if(!p.classList.contains('open')) p.style.display='none'; },240); }
+  else { p.style.display='block'; if(o) o.style.display='block'; buildSettingsPanel(); requestAnimationFrame(()=>p.classList.add('open')); }
+}
+let particles=[];
+function initParticles(){
+  particles=[];
+  const q=Math.max(10, Math.min(220, parseInt(bgS.quantity)||60));
+  for(let i=0;i<q;i++){
+    particles.push({ x:Math.random()*innerWidth, y:Math.random()*innerHeight,
+      vx:(Math.random()-.5)*(parseFloat(bgS.speed)||1)*.4, vy:(Math.random()-.5)*(parseFloat(bgS.speed)||1)*.4,
+      r:(Math.random()*2+.5)*(parseFloat(bgS.size)||1), o:Math.random()*.6+.2 });
+  }
+}
+function animBg(){
+  const c=document.getElementById('bg-canvas');
+  if(c){
+    const ctx=c.getContext('2d');
+    c.width=innerWidth; c.height=innerHeight;
+    const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#00ff88';
+    const aScale=Math.max(.15, Math.min(1.8,(parseFloat(bgS.brightness)||65)/75));
+    ctx.clearRect(0,0,c.width,c.height);
+    particles.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0)p.x=c.width; if(p.x>c.width)p.x=0;
+      if(p.y<0)p.y=c.height; if(p.y>c.height)p.y=0;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.shadowColor=accent; ctx.shadowBlur=Math.max(0,((parseFloat(bgS.brightness)||65)-45)/5);
+      ctx.fillStyle=(parseFloat(bgS.brightness)||65)>85?'#ffffff':accent;
+      ctx.globalAlpha=Math.min(1,p.o*aScale); ctx.fill();
+    });
+    ctx.globalAlpha=1; ctx.shadowBlur=0;
+  }
+  requestAnimationFrame(animBg);
+}
+
+let spherePts=[], sphereRot=0;
+function initSphere(){
+  spherePts=[];
+  const n=70;
+  for(let i=0;i<n;i++){
+    const y=1-(i/(n-1))*2;
+    const r=Math.sqrt(1-y*y);
+    const th=i*2.399963;
+    spherePts.push({x:Math.cos(th)*r, y:y, z:Math.sin(th)*r});
+  }
+}
+function animSphere(){
+  const c=document.getElementById('sphere-canvas');
+  if(!c){ requestAnimationFrame(animSphere); return; }
+  const hub=document.getElementById('cloud-hub');
+  const w=hub.clientWidth, h=hub.clientHeight;
+  if(c.width!==w || c.height!==h){ c.width=w; c.height=h; }
+  const ctx=c.getContext('2d');
+  ctx.clearRect(0,0,w,h);
+  sphereRot+=cloudOn?0.012:0.004;
+  const cx=w/2, cy=h/2-6, R=Math.min(w,h)*0.36;
+  const accent=cloudOn?(getComputedStyle(document.documentElement).getPropertyValue('--accent2').trim()||'#0af'):'#7a8796';
+  const sorted=spherePts.map(p=>{
+    const x=p.x*Math.cos(sphereRot)-p.z*Math.sin(sphereRot);
+    const z=p.x*Math.sin(sphereRot)+p.z*Math.cos(sphereRot);
+    return {x, y:p.y, z};
+  }).sort((a,b)=>a.z-b.z);
+  sorted.forEach(p=>{
+    const s=(p.z+2)/3;
+    ctx.beginPath();
+    ctx.arc(cx+p.x*R, cy+p.y*R, 1.2+s*1.8, 0, Math.PI*2);
+    ctx.fillStyle=accent;
+    ctx.globalAlpha=0.25+s*0.7;
+    ctx.fill();
+  });
+  ctx.globalAlpha=1;
+  requestAnimationFrame(animSphere);
+}
+
+let cloudOn=true, fileDevice='laptop', dragState=null, lockTimer=null;
+const DEV_NAMES={laptop:'Laptop', phone:'Telefono', tablet:'Tablet'};
+const LOCK_MSG='🔒 I file locali non possono essere trasferiti da dispositivo a dispositivo senza un collegamento fisico tramite chiavetta USB o cavo';
+function setMsg(t){ const m=document.getElementById('cloud-msg'); if(m) m.textContent=t; }
+function centerOf(el){ const s=document.getElementById('cloud-stage').getBoundingClientRect(); const r=el.getBoundingClientRect(); return { x:r.left-s.left+r.width/2, y:r.top-s.top+r.height/2 }; }
+function drawLines(){
+  const stage=document.getElementById('cloud-stage');
+  if(!stage) return;
+  stage.querySelectorAll('.link-line').forEach(l=>l.remove());
+  const hc=centerOf(document.getElementById('cloud-hub'));
+  ['laptop','phone','tablet'].forEach(id=>{
+    const c=centerOf(document.getElementById('dev-'+id));
+    const dx=hc.x-c.x, dy=hc.y-c.y, len=Math.hypot(dx,dy);
+    const line=document.createElement('div');
+    line.className='link-line'+(cloudOn?' on':'');
+    line.style.left=c.x+'px'; line.style.top=c.y+'px'; line.style.width=len+'px';
+    line.style.transform='rotate('+Math.atan2(dy,dx)+'rad)';
+    stage.appendChild(line);
+  });
+}
+function placeFile(){
+  const stage=document.getElementById('cloud-stage');
+  if(!stage) return;
+  let f=document.getElementById('file-token');
+  if(!f){ f=document.createElement('div'); f.id='file-token'; f.className='file-token'; f.textContent='📁'; stage.appendChild(f); bindFile(f); }
+  let c;
+  if(fileDevice==='hub') c=centerOf(document.getElementById('cloud-hub'));
+  else c=centerOf(document.getElementById('dev-'+fileDevice));
+  f.style.left=(c.x-27)+'px'; f.style.top=(c.y-16)+'px';
+}
+function stagePos(e){ const s=document.getElementById('cloud-stage').getBoundingClientRect(); return { x:e.clientX-s.left, y:e.clientY-s.top }; }
+function pointIn(el, sp){ const s=document.getElementById('cloud-stage').getBoundingClientRect(); const r=el.getBoundingClientRect(); return sp.x>=r.left-s.left && sp.x<=r.right-s.left && sp.y>=r.top-s.top && sp.y<=r.bottom-s.top; }
+function bindFile(f){
+  f.addEventListener('pointerdown', e=>{
+    if(lockTimer) return;
+    const sp=stagePos(e);
+    dragState={ ox:sp.x-f.offsetLeft, oy:sp.y-f.offsetTop, warned:false };
+    try{ f.setPointerCapture(e.pointerId); }catch(err){}
+  });
+  f.addEventListener('pointermove', e=>{
+    if(!dragState) return;
+    const sp=stagePos(e), st=document.getElementById('cloud-stage');
+    let x=sp.x-dragState.ox, y=sp.y-dragState.oy;
+    const maxX=st.clientWidth-54, maxY=st.clientHeight-54;
+    if(cloudOn){ x=Math.max(0,Math.min(maxX,x)); y=Math.max(0,Math.min(maxY,y)); }
+    else {
+      const d=document.getElementById('dev-'+fileDevice), s=st.getBoundingClientRect(), r=d.getBoundingClientRect();
+      const bx1=r.left-s.left, by1=r.top-s.top, bx2=r.right-s.left-54, by2=r.bottom-s.top-54;
+      if(x<bx1-2||x>bx2+2||y<by1-2||y>by2+2){
+        if(!dragState.warned){ dragState.warned=true; showLock(); }
+        x=Math.max(bx1,Math.min(bx2,x)); y=Math.max(by1,Math.min(by2,y));
+      }
+    }
+    f.style.left=x+'px'; f.style.top=y+'px';
+  });
+  f.addEventListener('pointerup', endDrag);
+  f.addEventListener('pointercancel', endDrag);
+}
+function showLock(){
+  const f=document.getElementById('file-token');
+  if(!f) return;
+  f.classList.add('lock'); f.textContent='🔒'; setMsg(LOCK_MSG);
+  lockTimer=setTimeout(()=>{ f.classList.remove('lock'); f.textContent='📁'; lockTimer=null; }, 2800);
+}
+function endDrag(e){
+  if(!dragState) return;
+  const sp=stagePos(e);
+  if(cloudOn){
+    const hub=document.getElementById('cloud-hub');
+    let hit=null;
+    ['laptop','phone','tablet'].forEach(id=>{ if(pointIn(document.getElementById('dev-'+id), sp)) hit=id; });
+    if(pointIn(hub, sp) && !hit){
+      fileDevice='hub';
+      setMsg('📁 File su ☁️ Cloud: raggiungibile da laptop, telefono e tablet.');
+    } else if(hit){
+      const from=fileDevice; fileDevice=hit;
+      setMsg(from==='hub' ? ('📁 File scaricato dal Cloud su '+DEV_NAMES[hit]+'.') : ('📁 File trasferito via Cloud: '+DEV_NAMES[from]+' → '+DEV_NAMES[hit]+'.'));
+    } else setMsg('📁 File trascinato: rilascialo su un dispositivo o sulla sfera ☁️.');
+  } else {
+    setMsg(LOCK_MSG+'.');
+  }
+  dragState=null; placeFile();
+}
+function toggleCloud(){
+  cloudOn=!cloudOn;
+  document.getElementById('cloud-toggle').textContent = cloudOn?'☁️ Cloud: ON':'☁️ Cloud: OFF';
+  document.getElementById('cloud-hub').classList.toggle('on', cloudOn);
+  drawLines();
+  setMsg(cloudOn ? 'Cloud attivo: il 📁 File può viaggiare tra i dispositivi tramite la sfera ☁️.' : 'Cloud spento: file locali. Prova a trascinare 📁 fuori dal dispositivo.');
+}
+applyTheme(currentTheme);
+initParticles();
+animBg();
+initSphere();
+animSphere();
+window.addEventListener('resize', ()=>{ drawLines(); placeFile(); });
+drawLines();
+placeFile();
+</script>
+</body>
+</html>
