@@ -41,16 +41,17 @@ html[data-role="guest"] .owner-only { display:none !important; }
 .gate-back { background:var(--bg3); color:var(--muted); border:1px solid var(--border); }
 #gate-err { display:none; color:#f66; font-size:11px; margin-top:10px; }
 #owner-pass { display:none; }
-#menu-btn, #settings-btn { position:fixed; top:1rem; z-index:1000; background:var(--bg2); border:1px solid var(--border); color:var(--muted); width:40px; height:40px; border-radius:8px; cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center; }
+#menu-btn, #settings-btn, #rechoose-btn { position:fixed; top:1rem; z-index:1000; background:var(--bg2); border:1px solid var(--border); color:var(--muted); width:40px; height:40px; border-radius:8px; cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center; }
 #menu-btn { left:1rem; }
 #settings-btn { left:4rem; }
+#rechoose-btn { left:7rem; font-size:15px; }
 #overlay { position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:1198; display:none; }
 #overlay.show { display:block; }
 #side-menu { position:fixed; top:0; left:0; width:min(280px,86vw); height:100vh; background:linear-gradient(160deg,var(--bg2),var(--bg3)); border-right:1px solid var(--border); z-index:1199; padding:64px 18px 24px; transform:translateX(-110%); transition:transform .28s; }
 #side-menu.open { transform:translateX(0); }
 #menu-close { position:absolute; top:14px; right:14px; background:none; border:none; color:var(--muted); font-size:22px; cursor:pointer; }
 #side-menu h3 { font-family:var(--title); margin-bottom:14px; }
-.menu-item { display:flex; align-items:center; gap:10px; color:var(--text); text-decoration:none; padding:10px 8px; border-radius:8px; font-size:13px; }
+.menu-item { display:flex; align-items:center; gap:10px; color:var(--text); text-decoration:none; padding:10px 8px; border-radius:8px; font-size:13px; background:none; border:none; width:100%; font-family:var(--mono); cursor:pointer; text-align:left; }
 .menu-item:hover { background:var(--bg3); color:var(--accent); }
 #settings-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:1998; }
 #settings-panel { display:none; position:fixed; top:0; right:0; width:min(340px,92vw); height:100vh; background:linear-gradient(160deg,var(--bg2),var(--bg3)); border-left:1px solid var(--border); z-index:1999; overflow-y:auto; transform:translateX(18px); opacity:0; transition:transform .24s, opacity .24s; }
@@ -61,7 +62,7 @@ html[data-role="guest"] .owner-only { display:none !important; }
 .theme-btn { background:var(--bg3); border:1px solid var(--border); color:var(--muted); padding:8px 12px; border-radius:8px; cursor:pointer; font-family:var(--mono); font-size:12px; }
 .bg-slider { display:grid; grid-template-columns:86px 1fr 34px; gap:8px; align-items:center; margin:8px 0; font-size:11px; color:var(--muted); }
 section { position:relative; z-index:1; max-width:980px; margin:0 auto; padding:4.5rem 1.25rem 2.8rem; }
-#experiences { padding-top:5.5rem; }
+#about { padding-top:5.5rem; }
 html[data-role="guest"] #cloud { padding-top:5.5rem; }
 .section-label { font-size:11px; letter-spacing:3px; color:var(--accent); margin-bottom:8px; }
 .section-title { font-family:var(--title); font-size:clamp(1.7rem,5vw,2.6rem); margin-bottom:10px; }
@@ -69,9 +70,13 @@ html[data-role="guest"] #cloud { padding-top:5.5rem; }
 .card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:18px; margin-bottom:12px; }
 .card h3 { font-family:var(--title); font-size:1.05rem; margin-bottom:8px; color:var(--accent); }
 .divider { text-align:center; color:var(--muted); opacity:.5; padding:.4rem 0; position:relative; z-index:1; }
-.lang-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px; }
-.lang-chip { background:var(--bg3); border:1px solid var(--border); border-radius:12px; padding:16px; text-align:center; }
+.fact-grid, .lang-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px; perspective:900px; }
+.fact { background:var(--bg3); border:1px solid var(--border); border-radius:12px; padding:14px; }
+.fact b { display:block; color:var(--accent); font-size:11px; letter-spacing:2px; margin-bottom:6px; }
+.lang-chip { background:var(--bg3); border:1px solid var(--border); border-radius:12px; padding:18px 16px; text-align:center; transform-style:preserve-3d; transition:transform .12s ease, box-shadow .18s, border-color .18s, background .18s; cursor:default; }
+.lang-chip .lang-ico { display:block; font-size:1.7rem; margin-bottom:8px; font-weight:800; font-family:var(--title); color:var(--accent); }
 .lang-chip strong { display:block; font-family:var(--title); font-size:1.2rem; }
+.lang-chip.lit { border-color:var(--accent); background:color-mix(in srgb, var(--accent) 12%, var(--bg3)); box-shadow:0 12px 28px color-mix(in srgb, var(--accent) 28%, transparent), 0 0 22px color-mix(in srgb, var(--accent) 35%, transparent); }
 .cloud-lab { background:var(--bg2); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
 .explorer { background:#1b1b1b; border-bottom:1px solid #3a3a3a; color:#eee; font-family:Segoe UI, system-ui, sans-serif; }
 .exp-title { display:flex; align-items:center; justify-content:space-between; padding:8px 12px; background:#2b2b2b; font-size:13px; }
@@ -106,10 +111,12 @@ html[data-role="guest"] #cloud { padding-top:5.5rem; }
 #dev-laptop { left:18px; top:28px; }
 #dev-phone { left:18px; bottom:28px; }
 #dev-tablet { right:18px; top:50%; transform:translateY(-50%); }
-.cloud-hub { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:150px; height:150px; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; border:2px solid #7a8796; background:rgba(122,135,150,.08); z-index:2; text-align:center; overflow:hidden; }
-.cloud-hub.on { border-color:#3aa0ff; box-shadow:0 0 34px rgba(58,160,255,.4); background:rgba(58,160,255,.12); }
-#sphere-canvas { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
-.cloud-hub .hub-label { position:relative; z-index:2; font-size:10px; letter-spacing:2px; color:var(--muted); margin-top:4px; }
+.cloud-hub { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:230px; height:140px; z-index:2; display:flex; align-items:center; justify-content:center; }
+.cloud-svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; }
+.cloud-fill { fill:rgba(122,135,150,.1); stroke:#7a8796; stroke-width:3; transition:fill .3s, stroke .3s, filter .3s; }
+.cloud-hub.on .cloud-fill { fill:rgba(58,160,255,.16); stroke:#3aa0ff; filter:drop-shadow(0 0 14px rgba(58,160,255,.55)); }
+#sphere-canvas { position:absolute; left:18%; top:16%; width:64%; height:58%; pointer-events:none; }
+.cloud-hub .hub-label { position:relative; z-index:2; font-size:11px; letter-spacing:3px; color:var(--muted); pointer-events:none; margin-top:10px; }
 .cloud-hub.on .hub-label { color:#9ad4ff; }
 .link-line { position:absolute; height:2px; background:#3aa0ff; z-index:1; transform-origin:left center; opacity:.85; box-shadow:0 0 10px rgba(58,160,255,.55); transition:background .4s, box-shadow .4s, opacity .8s .25s, filter .4s; }
 .link-line.shut { background:#6a737d; box-shadow:none; filter:grayscale(1); opacity:0; }
@@ -138,7 +145,8 @@ footer span { color:var(--accent); }
   #dev-laptop { left:12px; top:16px; width:132px; }
   #dev-phone { left:12px; bottom:16px; width:132px; }
   #dev-tablet { right:12px; top:auto; bottom:170px; transform:none; width:132px; }
-  .cloud-hub { width:128px; height:128px; }
+  .cloud-hub { width:180px; height:110px; }
+  #rechoose-btn { left:7rem; }
 }
 </style>
 </head>
@@ -166,29 +174,44 @@ footer span { color:var(--accent); }
 </div>
 <button id="menu-btn" onclick="toggleMenu()" title="Apri menu">☰</button>
 <button id="settings-btn" onclick="toggleSettings()" title="Impostazioni">⚙️</button>
+<button id="rechoose-btn" onclick="rechoose()" title="Cambia accesso">↩️</button>
 <div id="settings-overlay" onclick="toggleSettings()"></div>
 <div id="settings-panel"></div>
 <div id="overlay" onclick="closeMenu()"></div>
 <nav id="side-menu">
   <button id="menu-close" onclick="closeMenu()">✕</button>
   <h3>Sezioni</h3>
+  <a class="menu-item owner-only" href="#about" onclick="closeMenu()"><span>👤</span> Abt Me</a>
   <a class="menu-item owner-only" href="#experiences" onclick="closeMenu()"><span>💻</span> My experiences</a>
   <a class="menu-item" href="#cloud" onclick="closeMenu()"><span>☁️</span> Cloud</a>
   <a class="menu-item owner-only" href="#credits" onclick="closeMenu()"><span>❤️</span> Crediti</a>
+  <button class="menu-item" onclick="rechoose()"><span>↩️</span> Cambia accesso</button>
 </nav>
+<section id="about" class="owner-only">
+  <div class="section-label">01 — ABT ME</div>
+  <div class="section-title">Chi sono</div>
+  <div class="fact-grid">
+    <div class="fact"><b>NOME</b>Mario S.</div>
+    <div class="fact"><b>ETÀ</b>15 anni</div>
+    <div class="fact"><b>SPORT</b>Basket</div>
+    <div class="fact"><b>FAMIGLIA</b>Due fratelli</div>
+    <div class="fact"><b>ANIMALI</b>Pappagalli 2 di razza cocorita</div>
+  </div>
+</section>
+<div class="divider owner-only">▼</div>
 <section id="experiences" class="owner-only">
-  <div class="section-label">01 — MY EXPERIENCES</div>
+  <div class="section-label">02 — MY EXPERIENCES</div>
   <div class="section-title">Il mio percorso</div>
   <div class="section-bridge">Linguaggi che sto imparando e perché ho scelto l'informatica.</div>
   <div class="card">
     <h3>Linguaggi conosciuti</h3>
     <p>Ho iniziato un percorso di studio e conosco vari linguaggi di programmazione:</p>
   </div>
-  <div class="lang-grid">
-    <div class="lang-chip"><strong>HTML</strong>struttura</div>
-    <div class="lang-chip"><strong>CSS</strong>stile</div>
-    <div class="lang-chip"><strong>Python</strong>logica</div>
-    <div class="lang-chip"><strong>JavaScript</strong>interattività</div>
+  <div class="lang-grid" id="lang-grid">
+    <div class="lang-chip"><span class="lang-ico">&lt;/&gt;</span><strong>HTML</strong>struttura</div>
+    <div class="lang-chip"><span class="lang-ico">{#}</span><strong>CSS</strong>stile</div>
+    <div class="lang-chip"><span class="lang-ico">🐍</span><strong>Python</strong>logica</div>
+    <div class="lang-chip"><span class="lang-ico">JS</span><strong>JavaScript</strong>interattività</div>
   </div>
   <div class="card">
     <h3>E in futuro anche altro...</h3>
@@ -199,7 +222,7 @@ footer span { color:var(--accent); }
 <section id="cloud">
   <div class="section-label">CLOUD</div>
   <div class="section-title">☁️ Cloud</div>
-  <div class="section-bridge">Salva un file, accendi o spegni il Cloud, usa la USB quando è locale.</div>
+  <div class="section-bridge">Salva un file. Cloud ON: trascina 📁 dal dispositivo alla ☁️ e poi su un altro. Cloud OFF: solo con la USB.</div>
   <div class="cloud-lab">
     <div class="explorer">
       <div class="exp-title"><b>Esplora file</b><div class="exp-dots"><i></i><i></i><i></i></div></div>
@@ -229,10 +252,13 @@ footer span { color:var(--accent); }
     <div class="cloud-wrap">
       <div class="cloud-top">
         <button class="cloud-toggle" id="cloud-toggle" onclick="toggleCloud()">☁️ Cloud: ON</button>
-        <span style="font-size:11px;color:var(--muted)">Salva il file · USB se il Cloud è OFF</span>
+        <span style="font-size:11px;color:var(--muted)">ON: dispositivo → ☁️ → dispositivo · OFF: USB</span>
       </div>
       <div class="cloud-stage" id="cloud-stage">
         <div class="cloud-hub on" id="cloud-hub">
+          <svg class="cloud-svg" viewBox="0 0 230 140" aria-hidden="true">
+            <path class="cloud-fill" d="M48,112 C18,112 10,86 28,74 C12,58 22,32 52,38 C62,14 102,10 118,34 C138,16 178,22 184,48 C214,48 226,78 204,96 C220,118 186,128 160,118 C138,132 78,128 48,112 Z"/>
+          </svg>
           <canvas id="sphere-canvas"></canvas>
           <small class="hub-label">CLOUD</small>
         </div>
@@ -240,7 +266,7 @@ footer span { color:var(--accent); }
         <div class="device" id="dev-phone"><svg viewBox="0 0 48 48"><rect x="16" y="6" width="16" height="36" rx="3"/><path d="M22 38h4"/></svg><span>TELEFONO</span></div>
         <div class="device" id="dev-tablet"><svg viewBox="0 0 48 48"><rect x="10" y="6" width="28" height="36" rx="3"/><path d="M21 38h6"/></svg><span>TABLET</span></div>
       </div>
-      <div id="cloud-msg">Salva un file dall'Esplora file. Con il Cloud ON resta sulla ☁️. Con il Cloud OFF va su un dispositivo a caso e si sposta solo con la USB.</div>
+      <div id="cloud-msg">Salva un file. Cloud ON: 📁 dal dispositivo alla ☁️, poi sull'altro dispositivo. Cloud OFF: si sposta solo con la 💾 USB.</div>
     </div>
   </div>
   <div class="compare">
@@ -304,6 +330,7 @@ function backGate(){
   document.getElementById('owner-pass').style.display='none';
   document.getElementById('gate-intro').textContent='Due modi per entrare: proprietario con password, oppure ospite solo sul Cloud.';
   document.getElementById('gate-err').style.display='none';
+  const inp=document.getElementById('gate-pass'); if(inp) inp.value='';
 }
 function tryUnlock(){
   const inp=document.getElementById('gate-pass');
@@ -320,6 +347,13 @@ function enterGuest(){
   document.documentElement.dataset.role='guest';
   document.getElementById('gate').classList.add('hidden');
   location.hash='#cloud';
+}
+function rechoose(){
+  closeMenu();
+  document.documentElement.removeAttribute('data-role');
+  backGate();
+  document.getElementById('gate').classList.remove('hidden');
+  window.scrollTo(0,0);
 }
 document.getElementById('gate-pass').addEventListener('keydown', e=>{ if(e.key==='Enter') tryUnlock(); });
 function toggleMenu(){ const o=document.getElementById('side-menu').classList.toggle('open'); document.getElementById('overlay').classList.toggle('show',o); }
@@ -432,13 +466,12 @@ function initSphere(){
 function animSphere(){
   const c=document.getElementById('sphere-canvas');
   if(!c){ requestAnimationFrame(animSphere); return; }
-  const hub=document.getElementById('cloud-hub');
-  const w=hub.clientWidth, h=hub.clientHeight;
+  const w=c.clientWidth, h=c.clientHeight;
   if(c.width!==w || c.height!==h){ c.width=w; c.height=h; }
   const ctx=c.getContext('2d');
   ctx.clearRect(0,0,w,h);
   sphereRot+=cloudOn?0.012:0.004;
-  const cx=w/2, cy=h/2-6, R=Math.min(w,h)*0.36;
+  const cx=w/2, cy=h/2, R=Math.min(w,h)*0.38;
   const accent=cloudOn?(getComputedStyle(document.documentElement).getPropertyValue('--accent2').trim()||'#0af'):'#7a8796';
   const sorted=spherePts.map(p=>{
     const x=p.x*Math.cos(sphereRot)-p.z*Math.sin(sphereRot);
@@ -448,13 +481,30 @@ function animSphere(){
   sorted.forEach(p=>{
     const s=(p.z+2)/3;
     ctx.beginPath();
-    ctx.arc(cx+p.x*R, cy+p.y*R, 1.2+s*1.8, 0, Math.PI*2);
+    ctx.arc(cx+p.x*R, cy+p.y*R*0.72, 1.1+s*1.6, 0, Math.PI*2);
     ctx.fillStyle=accent;
     ctx.globalAlpha=0.25+s*0.7;
     ctx.fill();
   });
   ctx.globalAlpha=1;
   requestAnimationFrame(animSphere);
+}
+function bindLangTilt(){
+  document.querySelectorAll('.lang-chip').forEach(chip=>{
+    chip.addEventListener('mousemove', e=>{
+      const r=chip.getBoundingClientRect();
+      const px=(e.clientX-r.left)/r.width;
+      const py=(e.clientY-r.top)/r.height;
+      const rx=(0.5-py)*18;
+      const ry=(px-0.5)*22;
+      chip.style.transform=`perspective(700px) rotateX(${rx}deg) rotateY(${ry}deg) scale(1.07)`;
+      chip.classList.add('lit');
+    });
+    chip.addEventListener('mouseleave', ()=>{
+      chip.style.transform='perspective(700px) rotateX(0deg) rotateY(0deg) scale(1)';
+      chip.classList.remove('lit');
+    });
+  });
 }
 
 const FOLDERS=[['🏠','Home','Questo PC ▸ Home'],['🖥️','Desktop','Questo PC ▸ Desktop'],['⬇️','Download','Questo PC ▸ Download'],['📁','Documenti','Questo PC ▸ Documenti'],['🖼️','Immagini','Questo PC ▸ Immagini'],['🎵','Musica','Questo PC ▸ Musica'],['🎬','Video','Questo PC ▸ Video']];
@@ -578,7 +628,8 @@ function highlightUsb(){
 }
 function showLock(){
   const f=fileEl();
-  f.classList.add('lock'); f.firstChild && (f.childNodes[0].textContent='🔒');
+  f.classList.add('lock');
+  if(f.childNodes[0]) f.childNodes[0].textContent='🔒';
   setMsg(LOCK_MSG);
   clearTimeout(lockTimer);
   lockTimer=setTimeout(()=>{ f.classList.remove('lock'); if(f.childNodes[0]) f.childNodes[0].textContent='📁'; lockTimer=null; }, 2600);
@@ -586,7 +637,6 @@ function showLock(){
 function bindFile(f){
   f.addEventListener('pointerdown', e=>{
     if(busy || lockTimer || !fileReady || usb.hasFile) return;
-    if(cloudOn){ setMsg('☁️ Cloud attivo: il file resta sulla nuvola finché non lo spegni.'); return; }
     const sp=stagePos(e);
     dragState={ ox:sp.x-f.offsetLeft, oy:sp.y-f.offsetTop, warned:false };
     try{ f.setPointerCapture(e.pointerId); }catch(err){}
@@ -595,16 +645,21 @@ function bindFile(f){
     if(!dragState) return;
     const sp=stagePos(e), st=document.getElementById('cloud-stage');
     let x=sp.x-dragState.ox, y=sp.y-dragState.oy;
-    const d=document.getElementById('dev-'+fileDevice), s=st.getBoundingClientRect(), r=d.getBoundingClientRect();
-    const canUsb = usb.connected===fileDevice;
-    if(canUsb){
+    if(cloudOn){
       x=Math.max(0, Math.min(st.clientWidth-58, x));
       y=Math.max(0, Math.min(st.clientHeight-58, y));
     } else {
-      const bx1=r.left-s.left, by1=r.top-s.top, bx2=r.right-s.left-58, by2=r.bottom-s.top-58;
-      if(x<bx1-2||x>bx2+2||y<by1-2||y>by2+2){
-        if(!dragState.warned){ dragState.warned=true; showLock(); }
-        x=Math.max(bx1,Math.min(bx2,x)); y=Math.max(by1,Math.min(by2,y));
+      const d=document.getElementById('dev-'+fileDevice), s=st.getBoundingClientRect(), r=d.getBoundingClientRect();
+      const canUsb = usb.connected===fileDevice;
+      if(canUsb){
+        x=Math.max(0, Math.min(st.clientWidth-58, x));
+        y=Math.max(0, Math.min(st.clientHeight-58, y));
+      } else {
+        const bx1=r.left-s.left, by1=r.top-s.top, bx2=r.right-s.left-58, by2=r.bottom-s.top-58;
+        if(x<bx1-2||x>bx2+2||y<by1-2||y>by2+2){
+          if(!dragState.warned){ dragState.warned=true; showLock(); }
+          x=Math.max(bx1,Math.min(bx2,x)); y=Math.max(by1,Math.min(by2,y));
+        }
       }
     }
     f.style.left=x+'px'; f.style.top=y+'px';
@@ -615,8 +670,33 @@ function bindFile(f){
 function endFileDrag(e){
   if(!dragState) return;
   const sp=stagePos(e);
+  if(cloudOn){
+    const hub=document.getElementById('cloud-hub');
+    let hit=null;
+    ['laptop','phone','tablet'].forEach(id=>{ if(pointIn(document.getElementById('dev-'+id), sp)) hit=id; });
+    if(pointIn(hub, sp) && !hit){
+      const from=fileDevice;
+      fileDevice='hub';
+      dragState=null;
+      placeFile(true);
+      setMsg(from==='hub' ? '📁 resta sulla ☁️. Trascinalo su un dispositivo per scaricarlo.' : '📁 caricato sulla ☁️ dal '+DEV_NAMES[from]+'. Ora trascinalo su un altro dispositivo.');
+      return;
+    }
+    if(hit){
+      const from=fileDevice;
+      fileDevice=hit;
+      dragState=null;
+      placeFile(true);
+      setMsg(from==='hub' ? ('📁 scaricato dal Cloud sul '+DEV_NAMES[hit]+'.') : (from===hit ? ('📁 sul '+DEV_NAMES[hit]+'.') : ('📁 trasferito via Cloud: '+(DEV_NAMES[from]||'☁️')+' → '+DEV_NAMES[hit]+'.')));
+      return;
+    }
+    dragState=null;
+    placeFile(true);
+    setMsg('Rilascia il 📁 sulla ☁️ o su un dispositivo.');
+    return;
+  }
   const u=document.getElementById('usb-token');
-  if(!cloudOn && usb.connected===fileDevice && u && pointIn(u, sp)){
+  if(usb.connected===fileDevice && u && pointIn(u, sp)){
     usb.hasFile=true;
     fileDevice='usb';
     dragState=null;
@@ -682,7 +762,7 @@ function saveFile(){
   if(cloudOn){
     fileDevice='hub';
     placeFile(true);
-    setMsg('File salvato: '+fileName+'.file. Cloud ON → resta sulla ☁️ finché non lo spegni.');
+    setMsg('File salvato: '+fileName+'.file. Cloud ON → 📁 sulla ☁️. Trascinalo su un dispositivo, o da un dispositivo di nuovo sulla ☁️.');
   } else {
     fileDevice=randomDevice();
     placeFile(true);
@@ -713,15 +793,11 @@ function toggleCloud(){
     usb.hasFile=false;
     usb.connected=null;
     drawLines('on');
+    placeUsbDefault();
     if(fileReady){
-      busy=true;
-      fileDevice='hub';
-      placeFile(true);
-      setMsg('Cloud attivo. 📁 resta sulla ☁️ finché non disattivi il Cloud.');
-      setTimeout(()=>{ busy=false; }, 850);
+      setMsg('Cloud attivo. Trascina 📁 dal dispositivo alla ☁️, poi su un altro dispositivo.');
     } else {
-      placeUsbDefault();
-      setMsg('Cloud attivo. Salva un file: resterà sulla nuvola.');
+      setMsg('Cloud attivo. Salva un file e spostalo tra ☁️ e dispositivi.');
     }
   }
   highlightUsb();
@@ -732,6 +808,7 @@ initParticles();
 animBg();
 initSphere();
 animSphere();
+bindLangTilt();
 fileName=randomName();
 savedName=fileName;
 buildFolders();
