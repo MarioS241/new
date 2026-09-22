@@ -76,7 +76,7 @@ html[data-role="guest"] #cloud { padding-top:5.5rem; }
 .fact { background:var(--bg3); border:1px solid var(--border); border-radius:12px; padding:14px; }
 .fact b { display:block; color:var(--accent); font-size:11px; letter-spacing:2px; margin-bottom:6px; }
 .lang-chip { background:var(--bg3); border:1px solid var(--border); border-radius:12px; padding:18px 16px; text-align:center; transform-style:preserve-3d; transition:transform .12s ease, box-shadow .18s, border-color .18s, background .18s; cursor:default; }
-.lang-chip .lang-logo { width:52px; height:52px; margin:0 auto 10px; display:block; }
+.lang-chip .lang-logo { width:64px; height:64px; margin:0 auto 10px; display:block; }
 .lang-chip strong { display:block; font-family:var(--title); font-size:1.2rem; }
 .lang-chip.lit { border-color:var(--accent); background:color-mix(in srgb, var(--accent) 12%, var(--bg3)); box-shadow:0 12px 28px color-mix(in srgb, var(--accent) 28%, transparent), 0 0 22px color-mix(in srgb, var(--accent) 35%, transparent); }
 .lang-chip.lit .lang-logo { filter:drop-shadow(0 0 10px color-mix(in srgb, var(--accent) 55%, transparent)); }
@@ -127,7 +127,7 @@ html[data-role="guest"] #cloud { padding-top:5.5rem; }
 .file-token.show { display:flex; }
 .file-token:active { cursor:grabbing; }
 .file-token.lock { border-color:#f66; box-shadow:0 0 16px rgba(255,102,102,.25); }
-.file-token.fly { transition:left .8s cubic-bezier(.4,.1,.2,1), top .8s cubic-bezier(.4,.1,.2,1); pointer-events:none; }
+.file-token.fly { transition:left .5s cubic-bezier(.4,.1,.2,1), top .5s cubic-bezier(.4,.1,.2,1); pointer-events:none; }
 .file-token .flab { font-size:8px; letter-spacing:0; color:var(--muted); max-width:54px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .usb-token { position:absolute; z-index:7; width:86px; height:40px; border-radius:4px 12px 12px 4px; background:linear-gradient(180deg,#d9dee4,#9aa3ad); color:#1a1a1a; display:none; align-items:center; justify-content:center; gap:4px; font-size:11px; font-weight:700; letter-spacing:1px; cursor:grab; user-select:none; touch-action:none; box-shadow:2px 3px 0 #5b636b; }
 .usb-token.show { display:flex; }
@@ -210,19 +210,19 @@ footer span { color:var(--accent); }
   </div>
   <div class="lang-grid" id="lang-grid">
     <div class="lang-chip">
-      <svg class="lang-logo" viewBox="0 0 128 128" aria-label="HTML5"><path fill="#E44D26" d="M19 115L8 1h112l-11 114-45 13z"/><path fill="#F16529" d="M64 117l36-10 10-98H64z"/><path fill="#EBEBEB" d="M64 37H44l1 12h19V37zm0 26H34l1 14h29V63zm0 40l-18-5-1-14H34l2 24 28 8z"/><path fill="#FFF" d="M64 37v12h20l-1-12H64zm0 26v14h16l1-14H64zm0 38v13l28-8 4-37H64v14h19l-2 19z"/></svg>
+      <svg class="lang-logo" viewBox="0 0 452 512" aria-label="HTML5"><path fill="#E34F26" d="M41 460 0 0h451l-41 460-185 52z"/><path fill="#EF652A" d="M226 472l150-42 35-394H226z"/><path fill="#EBEBEB" d="M226 208h-75l-5-58h80V94H84l15 171h127zm0 147-64-17-4-45h-60l7 89 121 32z"/><path fill="#FFF" d="M226 265h69l-7 73-62 17v59l115-32 16-174H226v56h132l-4 47H226zm0-171v56h137l5-56z"/></svg>
       <strong>HTML</strong>struttura
     </div>
     <div class="lang-chip">
-      <svg class="lang-logo" viewBox="0 0 128 128" aria-label="CSS3"><path fill="#1572B6" d="M19 115L8 1h112l-11 114-45 13z"/><path fill="#33A9DC" d="M64 117l36-10 10-98H64z"/><path fill="#EBEBEB" d="M64 37H36l1 12h27V37zm0 40H35l1-14h28v-12H22l4 40h38z"/><path fill="#FFF" d="M64 37v12h28l1-12H64zm-1 66l18-5 2-19H64V65h38l-1 12-5 50-32 9z"/></svg>
+      <svg class="lang-logo" viewBox="0 0 452 512" aria-label="CSS3"><path fill="#1572B6" d="M41 460 0 0h451l-41 460-185 52z"/><path fill="#33A9DC" d="M226 472l150-42 35-394H226z"/><path fill="#EBEBEB" d="M226 208H94l-5-58h137V94H51l15 171h160zm-1 147-63-17-4-45H99l7 89 120 32z"/><path fill="#FFF" d="M226 265h69l-7 73-62 17v59l115-32 26-288H226v56h132l-4 47H226z"/></svg>
       <strong>CSS</strong>stile
     </div>
     <div class="lang-chip">
-      <svg class="lang-logo" viewBox="0 0 128 128" aria-label="Python"><path fill="#3776AB" d="M63 7c-15 0-14 7-14 7v10h15v3H35S15 25 15 50s8 24 8 24h18V61s-1-14 13-14h22c12 0 12-12 12-12V20S90 7 63 7zm-9 12a5 5 0 1 1 0 10 5 5 0 0 1 0-10z"/><path fill="#FFD43B" d="M65 121c15 0 14-7 14-7V104H64v-3h29s20 2 20-23-8-24-8-24H87v13s1 14-13 14H52c-12 0-12 12-12 12v24s-2 14 25 14zm9-12a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/><path fill="#3776AB" d="M51 49h13v13H51z"/><path fill="#FFD43B" d="M64 66h13v13H64z"/></svg>
+      <svg class="lang-logo" viewBox="0 0 128 128" aria-label="Python"><linearGradient id="pyA" x1="70.2" x2="45.7" y1="28.3" y2="91.9" gradientUnits="userSpaceOnUse"><stop stop-color="#387EB8"/><stop offset="1" stop-color="#366994"/></linearGradient><linearGradient id="pyB" x1="45.5" x2="70.9" y1="48.5" y2="117.3" gradientUnits="userSpaceOnUse"><stop stop-color="#FFE052"/><stop offset="1" stop-color="#FFC331"/></linearGradient><path fill="url(#pyA)" d="M63.4 1.9c-6.2-.1-12.1.5-17.5 1.6-15.7 3.2-18.5 9.9-18.5 22.3v16.4h37v5.5H21.2c-12.7 0-23.8 7.6-27.3 22.1-4 16.4-4.2 26.6 0 43.7C6.7 127.3 16.6 126 28.4 126h8.7V108.6c0-14.5 12.5-27.2 27.3-27.2h27.2c12.2 0 22.1-10.1 22.1-22.4V25.8c0-11.8-10-21.8-22.1-23.7C85.3 1.4 70.2 1.9 63.4 1.9zm-13 8.4c4.6 0 8.3 3.8 8.3 8.5 0 4.6-3.7 8.4-8.3 8.4-4.6 0-8.3-3.8-8.3-8.4 0-4.7 3.7-8.5 8.3-8.5z"/><path fill="url(#pyB)" d="M91.6 28.3v16.8c0 15.1-12.9 27.9-27.3 27.9H37.1c-12.2 0-22.1 10.4-22.1 22.5v23.8c0 11.8 10.3 18.7 22.1 22.1 14.2 4.1 27.8 4.8 43.7 0 10.5-3.2 22.1-9.6 22.1-22.1V102.9H66.2v-5.5h42.6c12.7 0 17.5-8.8 22.1-22.1 4.8-13.7 4.6-26.8 0-43.7-4.4-16.3-15-22.1-27.3-22.1H91.6zM75.8 97.4c4.6 0 8.3 3.8 8.3 8.4 0 4.7-3.7 8.5-8.3 8.5-4.6 0-8.3-3.8-8.3-8.5 0-4.6 3.7-8.4 8.3-8.4z"/></svg>
       <strong>Python</strong>logica
     </div>
     <div class="lang-chip">
-      <svg class="lang-logo" viewBox="0 0 128 128" aria-label="JavaScript"><path fill="#F0DB4F" d="M19 115L8 1h112l-11 114-45 13z"/><path fill="#E6C22A" d="M64 117l36-10 10-98H64z"/><path fill="#FFF" d="M56 90c0 8-5 13-14 13-8 0-13-4-16-9l8-5c2 3 4 5 8 5 3 0 5-1 5-5V58h9zm20 13c-10 0-16-5-19-11l8-5c2 4 5 7 11 7 5 0 8-2 8-6 0-4-3-6-11-9l-4-2c-11-4-18-10-18-21 0-10 8-18 20-18 9 0 15 3 20 11l-8 5c-2-3-4-6-12-6-4 0-7 2-7 6 0 4 3 6 11 9l4 2c12 5 19 10 19 22 0 13-10 20-22 20z"/></svg>
+      <svg class="lang-logo" viewBox="0 0 256 256" aria-label="JavaScript"><rect width="256" height="256" rx="28" fill="#F7DF1E"/><path fill="#323330" d="M107.5 196.4c0 17.6-10.3 32.3-33.7 32.3-18.1 0-30.3-9.4-36.1-20.7l19.6-11.9c3.1 5.5 7.4 9.6 15.2 9.6 6.8 0 11.1-2.7 11.1-13.1V118h23.9zm40.6 30.9c22.7 0 41.8-11.9 47.8-36.5l-23.3-9.4c-3.3 9.4-8.6 17.4-24.3 17.4-16.4 0-26.6-9-26.6-27.1 0-18.2 10.2-28.3 26.4-28.3 11.3 0 17.6 4.9 21.7 10.7l23.2-14.8C185.4 125 171.3 112 147.3 112c-32.2 0-53.1 21.5-53.1 52.1 0 30.3 20.3 53.2 53.9 53.2z"/></svg>
       <strong>JavaScript</strong>interattività
     </div>
   </div>
@@ -538,6 +538,7 @@ function refreshReveal(){
 const FOLDERS=[['🏠','Home','Questo PC ▸ Home'],['🖥️','Desktop','Questo PC ▸ Desktop'],['⬇️','Download','Questo PC ▸ Download'],['📁','Documenti','Questo PC ▸ Documenti'],['🖼️','Immagini','Questo PC ▸ Immagini'],['🎵','Musica','Questo PC ▸ Musica'],['🎬','Video','Questo PC ▸ Video']];
 const DEV_NAMES={laptop:'Laptop', phone:'Telefono', tablet:'Tablet'};
 const LOCK_MSG='🔒 File locale: senza Cloud non si sposta da solo. Collega una 💾 USB, metti il 📁 dentro e spostala su un altro dispositivo.';
+const HOP_MS=500;
 let cloudOn=true, fileReady=false, fileDevice='hub', fileName='', savedName='';
 let dragState=null, usbDrag=null, lockTimer=null, busy=false, toggling=false, lineShutTimer=null;
 let usb={connected:null, hasFile:false};
@@ -641,19 +642,32 @@ function placeUsbDefault(){
   u.classList.toggle('has', usb.hasFile);
   u.innerHTML = usb.hasFile ? '💾📁 USB' : '💾 USB';
 }
+function targetOf(dev){
+  if(dev==='hub') return centerOf(document.getElementById('cloud-hub'));
+  return centerOf(document.getElementById('dev-'+dev));
+}
 function placeFile(animate){
   const f=fileEl();
   updateNameUI();
   if(!fileReady || usb.hasFile){ f.classList.remove('show'); placeUsbDefault(); highlightUsb(); return; }
   f.classList.add('show');
-  let c;
-  if(fileDevice==='hub') c=centerOf(document.getElementById('cloud-hub'));
-  else c=centerOf(document.getElementById('dev-'+fileDevice));
+  const c=targetOf(fileDevice);
   if(animate) f.classList.add('fly'); else f.classList.remove('fly');
   f.style.left=(c.x-29)+'px'; f.style.top=(c.y-22)+'px';
-  if(animate) setTimeout(()=>f.classList.remove('fly'), 820);
+  if(animate) setTimeout(()=>f.classList.remove('fly'), HOP_MS+20);
   placeUsbDefault();
   highlightUsb();
+}
+function snapTo(dev){
+  const f=fileEl();
+  f.classList.add('show');
+  f.classList.remove('fly');
+  f.style.transition='none';
+  fileDevice=dev;
+  const c=targetOf(dev);
+  f.style.left=(c.x-29)+'px'; f.style.top=(c.y-22)+'px';
+  void f.offsetWidth;
+  f.style.transition='';
 }
 function highlightUsb(){
   ['laptop','phone','tablet'].forEach(id=>{
@@ -701,19 +715,33 @@ function bindFile(f){
   f.addEventListener('pointerup', endFileDrag);
   f.addEventListener('pointercancel', endFileDrag);
 }
-function flyTo(dev, animate){
+function hopTo(dev){
   fileDevice=dev;
-  placeFile(!!animate);
+  placeFile(true);
 }
-function flyViaCloud(to, msg){
+function flyViaCloud(from, to, msg){
   busy=true;
-  flyTo('hub', true);
-  setMsg('📁 passa dalla ☁️ ...');
-  setTimeout(()=>{
-    flyTo(to, true);
-    setMsg(msg);
-    setTimeout(()=>{ busy=false; }, 820);
-  }, 820);
+  snapTo(from);
+  setMsg('📁 '+DEV_NAMES[from]+' → ☁️ ...');
+  requestAnimationFrame(()=>{
+    hopTo('hub');
+    setTimeout(()=>{
+      setMsg('📁 ☁️ → '+DEV_NAMES[to]+' ...');
+      hopTo(to);
+      setTimeout(()=>{
+        setMsg(msg);
+        busy=false;
+      }, HOP_MS);
+    }, HOP_MS);
+  });
+}
+function hopAlong(from, to, msg){
+  busy=true;
+  snapTo(from);
+  requestAnimationFrame(()=>{
+    hopTo(to);
+    setTimeout(()=>{ setMsg(msg); busy=false; }, HOP_MS);
+  });
 }
 function endFileDrag(e){
   if(!dragState) return;
@@ -727,18 +755,16 @@ function endFileDrag(e){
     dragState=null;
     if(onHub){
       if(from==='hub'){ placeFile(false); setMsg('📁 resta sulla ☁️.'); return; }
-      flyTo('hub', true);
-      setMsg('📁 caricato sulla ☁️ dal '+DEV_NAMES[from]+'. Ora trascinalo su un altro dispositivo.');
+      hopAlong(from, 'hub', '📁 caricato sulla ☁️ dal '+DEV_NAMES[from]+'. Ora trascinalo su un altro dispositivo.');
       return;
     }
     if(hit){
       if(from===hit){ placeFile(false); return; }
       if(from==='hub'){
-        flyTo(hit, true);
-        setMsg('📁 scaricato dal Cloud sul '+DEV_NAMES[hit]+'.');
+        hopAlong('hub', hit, '📁 scaricato dal Cloud sul '+DEV_NAMES[hit]+'.');
         return;
       }
-      flyViaCloud(hit, '📁 trasferito via Cloud: '+DEV_NAMES[from]+' → ☁️ → '+DEV_NAMES[hit]+'.');
+      flyViaCloud(from, hit, '📁 trasferito via Cloud: '+DEV_NAMES[from]+' → ☁️ → '+DEV_NAMES[hit]+'.');
       return;
     }
     placeFile(false);
@@ -834,7 +860,7 @@ function toggleCloud(){
       fileDevice=randomDevice();
       placeFile(true);
       setMsg('Cloud disattivato. Collegamento spento (linee grigie, poi spariscono). 📁 portato a caso sul '+DEV_NAMES[fileDevice]+'.');
-      setTimeout(()=>{ busy=false; }, 850);
+      setTimeout(()=>{ busy=false; }, HOP_MS+20);
     } else {
       placeUsbDefault();
       setMsg('Cloud spento: niente collegamento in rete. I file locali si spostano solo con la 💾 USB.');
