@@ -64,6 +64,8 @@ html[data-role="guest"] .owner-only { display:none !important; }
 section { position:relative; z-index:1; max-width:980px; margin:0 auto; padding:4.5rem 1.25rem 2.8rem; }
 #about { padding-top:5.5rem; }
 html[data-role="guest"] #cloud { padding-top:5.5rem; }
+.reveal { opacity:0; transform:translateY(56px); filter:blur(8px); transition:opacity .75s ease, transform .75s ease, filter .75s ease; }
+.reveal.in { opacity:1; transform:none; filter:none; }
 .section-label { font-size:11px; letter-spacing:3px; color:var(--accent); margin-bottom:8px; }
 .section-title { font-family:var(--title); font-size:clamp(1.7rem,5vw,2.6rem); margin-bottom:10px; }
 .section-bridge { color:var(--muted); font-size:13px; margin-bottom:1.4rem; }
@@ -74,9 +76,10 @@ html[data-role="guest"] #cloud { padding-top:5.5rem; }
 .fact { background:var(--bg3); border:1px solid var(--border); border-radius:12px; padding:14px; }
 .fact b { display:block; color:var(--accent); font-size:11px; letter-spacing:2px; margin-bottom:6px; }
 .lang-chip { background:var(--bg3); border:1px solid var(--border); border-radius:12px; padding:18px 16px; text-align:center; transform-style:preserve-3d; transition:transform .12s ease, box-shadow .18s, border-color .18s, background .18s; cursor:default; }
-.lang-chip .lang-ico { display:block; font-size:1.7rem; margin-bottom:8px; font-weight:800; font-family:var(--title); color:var(--accent); }
+.lang-chip .lang-logo { width:52px; height:52px; margin:0 auto 10px; display:block; }
 .lang-chip strong { display:block; font-family:var(--title); font-size:1.2rem; }
 .lang-chip.lit { border-color:var(--accent); background:color-mix(in srgb, var(--accent) 12%, var(--bg3)); box-shadow:0 12px 28px color-mix(in srgb, var(--accent) 28%, transparent), 0 0 22px color-mix(in srgb, var(--accent) 35%, transparent); }
+.lang-chip.lit .lang-logo { filter:drop-shadow(0 0 10px color-mix(in srgb, var(--accent) 55%, transparent)); }
 .cloud-lab { background:var(--bg2); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
 .explorer { background:#1b1b1b; border-bottom:1px solid #3a3a3a; color:#eee; font-family:Segoe UI, system-ui, sans-serif; }
 .exp-title { display:flex; align-items:center; justify-content:space-between; padding:8px 12px; background:#2b2b2b; font-size:13px; }
@@ -113,9 +116,9 @@ html[data-role="guest"] #cloud { padding-top:5.5rem; }
 #dev-tablet { right:18px; top:50%; transform:translateY(-50%); }
 .cloud-hub { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:230px; height:140px; z-index:2; display:flex; align-items:center; justify-content:center; }
 .cloud-svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; }
-.cloud-fill { fill:rgba(122,135,150,.1); stroke:#7a8796; stroke-width:3; transition:fill .3s, stroke .3s, filter .3s; }
-.cloud-hub.on .cloud-fill { fill:rgba(58,160,255,.16); stroke:#3aa0ff; filter:drop-shadow(0 0 14px rgba(58,160,255,.55)); }
-#sphere-canvas { position:absolute; left:18%; top:16%; width:64%; height:58%; pointer-events:none; }
+.cloud-fill { fill:rgba(122,135,150,.08); stroke:#7a8796; stroke-width:3; transition:fill .3s, stroke .3s, filter .3s; }
+.cloud-hub.on .cloud-fill { fill:rgba(58,160,255,.12); stroke:#3aa0ff; filter:drop-shadow(0 0 14px rgba(58,160,255,.55)); }
+#sphere-canvas { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
 .cloud-hub .hub-label { position:relative; z-index:2; font-size:11px; letter-spacing:3px; color:var(--muted); pointer-events:none; margin-top:10px; }
 .cloud-hub.on .hub-label { color:#9ad4ff; }
 .link-line { position:absolute; height:2px; background:#3aa0ff; z-index:1; transform-origin:left center; opacity:.85; box-shadow:0 0 10px rgba(58,160,255,.55); transition:background .4s, box-shadow .4s, opacity .8s .25s, filter .4s; }
@@ -146,7 +149,6 @@ footer span { color:var(--accent); }
   #dev-phone { left:12px; bottom:16px; width:132px; }
   #dev-tablet { right:12px; top:auto; bottom:170px; transform:none; width:132px; }
   .cloud-hub { width:180px; height:110px; }
-  #rechoose-btn { left:7rem; }
 }
 </style>
 </head>
@@ -184,10 +186,9 @@ footer span { color:var(--accent); }
   <a class="menu-item owner-only" href="#about" onclick="closeMenu()"><span>👤</span> Abt Me</a>
   <a class="menu-item owner-only" href="#experiences" onclick="closeMenu()"><span>💻</span> My experiences</a>
   <a class="menu-item" href="#cloud" onclick="closeMenu()"><span>☁️</span> Cloud</a>
-  <a class="menu-item owner-only" href="#credits" onclick="closeMenu()"><span>❤️</span> Crediti</a>
   <button class="menu-item" onclick="rechoose()"><span>↩️</span> Cambia accesso</button>
 </nav>
-<section id="about" class="owner-only">
+<section id="about" class="owner-only reveal">
   <div class="section-label">01 — ABT ME</div>
   <div class="section-title">Chi sono</div>
   <div class="fact-grid">
@@ -199,7 +200,7 @@ footer span { color:var(--accent); }
   </div>
 </section>
 <div class="divider owner-only">▼</div>
-<section id="experiences" class="owner-only">
+<section id="experiences" class="owner-only reveal">
   <div class="section-label">02 — MY EXPERIENCES</div>
   <div class="section-title">Il mio percorso</div>
   <div class="section-bridge">Linguaggi che sto imparando e perché ho scelto l'informatica.</div>
@@ -208,10 +209,22 @@ footer span { color:var(--accent); }
     <p>Ho iniziato un percorso di studio e conosco vari linguaggi di programmazione:</p>
   </div>
   <div class="lang-grid" id="lang-grid">
-    <div class="lang-chip"><span class="lang-ico">&lt;/&gt;</span><strong>HTML</strong>struttura</div>
-    <div class="lang-chip"><span class="lang-ico">{#}</span><strong>CSS</strong>stile</div>
-    <div class="lang-chip"><span class="lang-ico">🐍</span><strong>Python</strong>logica</div>
-    <div class="lang-chip"><span class="lang-ico">JS</span><strong>JavaScript</strong>interattività</div>
+    <div class="lang-chip">
+      <svg class="lang-logo" viewBox="0 0 128 128" aria-label="HTML5"><path fill="#E44D26" d="M19 115L8 1h112l-11 114-45 13z"/><path fill="#F16529" d="M64 117l36-10 10-98H64z"/><path fill="#EBEBEB" d="M64 37H44l1 12h19V37zm0 26H34l1 14h29V63zm0 40l-18-5-1-14H34l2 24 28 8z"/><path fill="#FFF" d="M64 37v12h20l-1-12H64zm0 26v14h16l1-14H64zm0 38v13l28-8 4-37H64v14h19l-2 19z"/></svg>
+      <strong>HTML</strong>struttura
+    </div>
+    <div class="lang-chip">
+      <svg class="lang-logo" viewBox="0 0 128 128" aria-label="CSS3"><path fill="#1572B6" d="M19 115L8 1h112l-11 114-45 13z"/><path fill="#33A9DC" d="M64 117l36-10 10-98H64z"/><path fill="#EBEBEB" d="M64 37H36l1 12h27V37zm0 40H35l1-14h28v-12H22l4 40h38z"/><path fill="#FFF" d="M64 37v12h28l1-12H64zm-1 66l18-5 2-19H64V65h38l-1 12-5 50-32 9z"/></svg>
+      <strong>CSS</strong>stile
+    </div>
+    <div class="lang-chip">
+      <svg class="lang-logo" viewBox="0 0 128 128" aria-label="Python"><path fill="#3776AB" d="M63 7c-15 0-14 7-14 7v10h15v3H35S15 25 15 50s8 24 8 24h18V61s-1-14 13-14h22c12 0 12-12 12-12V20S90 7 63 7zm-9 12a5 5 0 1 1 0 10 5 5 0 0 1 0-10z"/><path fill="#FFD43B" d="M65 121c15 0 14-7 14-7V104H64v-3h29s20 2 20-23-8-24-8-24H87v13s1 14-13 14H52c-12 0-12 12-12 12v24s-2 14 25 14zm9-12a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/><path fill="#3776AB" d="M51 49h13v13H51z"/><path fill="#FFD43B" d="M64 66h13v13H64z"/></svg>
+      <strong>Python</strong>logica
+    </div>
+    <div class="lang-chip">
+      <svg class="lang-logo" viewBox="0 0 128 128" aria-label="JavaScript"><path fill="#F0DB4F" d="M19 115L8 1h112l-11 114-45 13z"/><path fill="#E6C22A" d="M64 117l36-10 10-98H64z"/><path fill="#FFF" d="M56 90c0 8-5 13-14 13-8 0-13-4-16-9l8-5c2 3 4 5 8 5 3 0 5-1 5-5V58h9zm20 13c-10 0-16-5-19-11l8-5c2 4 5 7 11 7 5 0 8-2 8-6 0-4-3-6-11-9l-4-2c-11-4-18-10-18-21 0-10 8-18 20-18 9 0 15 3 20 11l-8 5c-2-3-4-6-12-6-4 0-7 2-7 6 0 4 3 6 11 9l4 2c12 5 19 10 19 22 0 13-10 20-22 20z"/></svg>
+      <strong>JavaScript</strong>interattività
+    </div>
   </div>
   <div class="card">
     <h3>E in futuro anche altro...</h3>
@@ -219,7 +232,7 @@ footer span { color:var(--accent); }
   </div>
 </section>
 <div class="divider owner-only">▼</div>
-<section id="cloud">
+<section id="cloud" class="reveal">
   <div class="section-label">CLOUD</div>
   <div class="section-title">☁️ Cloud</div>
   <div class="section-bridge">Salva un file. Cloud ON: trascina 📁 dal dispositivo alla ☁️ e poi su un altro. Cloud OFF: solo con la USB.</div>
@@ -302,18 +315,7 @@ footer span { color:var(--accent); }
     </div>
   </div>
 </section>
-<div class="divider owner-only">▼</div>
-<section id="credits" class="owner-only">
-  <div class="section-label">CREDITI</div>
-  <div class="section-title">Crediti</div>
-  <div class="card">
-    <h3>Realizzato da</h3>
-    <p><strong>Mario S.</strong> (MarioS241) — progetto, codice e contenuti.</p>
-    <p style="margin-top:8px">Stile ispirato alla tesina <em>Informatica in Modo Digitale</em>. Sito single-file: solo HTML, CSS e JavaScript.</p>
-    <p style="margin-top:8px">GitHub: <strong>marios241.github</strong></p>
-  </div>
-</section>
-<footer>
+<footer class="reveal">
   <p>Made with <span>❤️</span> by <strong>MarioS</strong> · Anno scolastico 2026</p>
   <p class="owner-only" style="margin-top:6px">Portfolio personale · marios241.github</p>
 </footer>
@@ -338,6 +340,7 @@ function tryUnlock(){
   if(v===GATE_PASSWORD){
     document.documentElement.dataset.role='owner';
     document.getElementById('gate').classList.add('hidden');
+    refreshReveal();
   } else {
     document.getElementById('gate-err').style.display='block';
     if(inp) inp.value='';
@@ -347,6 +350,7 @@ function enterGuest(){
   document.documentElement.dataset.role='guest';
   document.getElementById('gate').classList.add('hidden');
   location.hash='#cloud';
+  refreshReveal();
 }
 function rechoose(){
   closeMenu();
@@ -455,23 +459,40 @@ function animBg(){
 let spherePts=[], sphereRot=0;
 function initSphere(){
   spherePts=[];
-  const n=70;
+  const n=140;
   for(let i=0;i<n;i++){
     const y=1-(i/(n-1))*2;
-    const r=Math.sqrt(1-y*y);
+    const r=Math.sqrt(Math.max(0,1-y*y));
     const th=i*2.399963;
     spherePts.push({x:Math.cos(th)*r, y:y, z:Math.sin(th)*r});
   }
 }
+function clipCloud(ctx,w,h){
+  const sx=w/230, sy=h/140;
+  ctx.beginPath();
+  ctx.moveTo(48*sx,112*sy);
+  ctx.bezierCurveTo(18*sx,112*sy,10*sx,86*sy,28*sx,74*sy);
+  ctx.bezierCurveTo(12*sx,58*sy,22*sx,32*sy,52*sx,38*sy);
+  ctx.bezierCurveTo(62*sx,14*sy,102*sx,10*sy,118*sx,34*sy);
+  ctx.bezierCurveTo(138*sx,16*sy,178*sx,22*sy,184*sx,48*sy);
+  ctx.bezierCurveTo(214*sx,48*sy,226*sx,78*sy,204*sx,96*sy);
+  ctx.bezierCurveTo(220*sx,118*sy,186*sx,128*sy,160*sx,118*sy);
+  ctx.bezierCurveTo(138*sx,132*sy,78*sx,128*sy,48*sx,112*sy);
+  ctx.closePath();
+  ctx.clip();
+}
 function animSphere(){
   const c=document.getElementById('sphere-canvas');
   if(!c){ requestAnimationFrame(animSphere); return; }
-  const w=c.clientWidth, h=c.clientHeight;
+  const hub=document.getElementById('cloud-hub');
+  const w=hub.clientWidth, h=hub.clientHeight;
   if(c.width!==w || c.height!==h){ c.width=w; c.height=h; }
   const ctx=c.getContext('2d');
   ctx.clearRect(0,0,w,h);
-  sphereRot+=cloudOn?0.012:0.004;
-  const cx=w/2, cy=h/2, R=Math.min(w,h)*0.38;
+  ctx.save();
+  clipCloud(ctx,w,h);
+  sphereRot+=cloudOn?0.014:0.005;
+  const cx=w*0.52, cy=h*0.52, Rx=w*0.38, Ry=h*0.32;
   const accent=cloudOn?(getComputedStyle(document.documentElement).getPropertyValue('--accent2').trim()||'#0af'):'#7a8796';
   const sorted=spherePts.map(p=>{
     const x=p.x*Math.cos(sphereRot)-p.z*Math.sin(sphereRot);
@@ -481,11 +502,12 @@ function animSphere(){
   sorted.forEach(p=>{
     const s=(p.z+2)/3;
     ctx.beginPath();
-    ctx.arc(cx+p.x*R, cy+p.y*R*0.72, 1.1+s*1.6, 0, Math.PI*2);
+    ctx.arc(cx+p.x*Rx, cy+p.y*Ry, 1.4+s*2.1, 0, Math.PI*2);
     ctx.fillStyle=accent;
-    ctx.globalAlpha=0.25+s*0.7;
+    ctx.globalAlpha=0.22+s*0.75;
     ctx.fill();
   });
+  ctx.restore();
   ctx.globalAlpha=1;
   requestAnimationFrame(animSphere);
 }
@@ -506,12 +528,18 @@ function bindLangTilt(){
     });
   });
 }
+const revealIO=new IntersectionObserver(entries=>{
+  entries.forEach(en=>{ if(en.isIntersecting) en.target.classList.add('in'); });
+},{threshold:0.18, rootMargin:'0px 0px -8% 0px'});
+function refreshReveal(){
+  document.querySelectorAll('.reveal').forEach(el=>{ revealIO.observe(el); });
+}
 
 const FOLDERS=[['🏠','Home','Questo PC ▸ Home'],['🖥️','Desktop','Questo PC ▸ Desktop'],['⬇️','Download','Questo PC ▸ Download'],['📁','Documenti','Questo PC ▸ Documenti'],['🖼️','Immagini','Questo PC ▸ Immagini'],['🎵','Musica','Questo PC ▸ Musica'],['🎬','Video','Questo PC ▸ Video']];
 const DEV_NAMES={laptop:'Laptop', phone:'Telefono', tablet:'Tablet'};
 const LOCK_MSG='🔒 File locale: senza Cloud non si sposta da solo. Collega una 💾 USB, metti il 📁 dentro e spostala su un altro dispositivo.';
 let cloudOn=true, fileReady=false, fileDevice='hub', fileName='', savedName='';
-let dragState=null, usbDrag=null, lockTimer=null, busy=false;
+let dragState=null, usbDrag=null, lockTimer=null, busy=false, toggling=false, lineShutTimer=null;
 let usb={connected:null, hasFile:false};
 function randomName(){ let s=''; for(let i=0;i<15;i++) s+=String.fromCharCode(97+Math.floor(Math.random()*26)); return s; }
 function randomDevice(){ return ['laptop','phone','tablet'][Math.floor(Math.random()*3)]; }
@@ -548,10 +576,16 @@ function pointIn(el, sp){ const s=document.getElementById('cloud-stage').getBoun
 function drawLines(mode){
   const stage=document.getElementById('cloud-stage');
   if(!stage) return;
+  if(lineShutTimer){ clearTimeout(lineShutTimer); lineShutTimer=null; }
   if(mode==='off-now'){ stage.querySelectorAll('.link-line').forEach(l=>l.remove()); return; }
   if(mode==='shut'){
-    stage.querySelectorAll('.link-line').forEach(l=>l.classList.add('shut'));
-    setTimeout(()=>stage.querySelectorAll('.link-line').forEach(l=>l.remove()), 900);
+    const lines=stage.querySelectorAll('.link-line');
+    if(!lines.length) return;
+    lines.forEach(l=>l.classList.add('shut'));
+    lineShutTimer=setTimeout(()=>{
+      stage.querySelectorAll('.link-line').forEach(l=>l.remove());
+      lineShutTimer=null;
+    }, 900);
     return;
   }
   stage.querySelectorAll('.link-line').forEach(l=>l.remove());
@@ -667,32 +701,47 @@ function bindFile(f){
   f.addEventListener('pointerup', endFileDrag);
   f.addEventListener('pointercancel', endFileDrag);
 }
+function flyTo(dev, animate){
+  fileDevice=dev;
+  placeFile(!!animate);
+}
+function flyViaCloud(to, msg){
+  busy=true;
+  flyTo('hub', true);
+  setMsg('📁 passa dalla ☁️ ...');
+  setTimeout(()=>{
+    flyTo(to, true);
+    setMsg(msg);
+    setTimeout(()=>{ busy=false; }, 820);
+  }, 820);
+}
 function endFileDrag(e){
   if(!dragState) return;
   const sp=stagePos(e);
+  const from=fileDevice;
   if(cloudOn){
     const hub=document.getElementById('cloud-hub');
     let hit=null;
     ['laptop','phone','tablet'].forEach(id=>{ if(pointIn(document.getElementById('dev-'+id), sp)) hit=id; });
-    if(pointIn(hub, sp) && !hit){
-      const from=fileDevice;
-      fileDevice='hub';
-      dragState=null;
-      placeFile(true);
-      setMsg(from==='hub' ? '📁 resta sulla ☁️. Trascinalo su un dispositivo per scaricarlo.' : '📁 caricato sulla ☁️ dal '+DEV_NAMES[from]+'. Ora trascinalo su un altro dispositivo.');
+    const onHub=pointIn(hub, sp) && !hit;
+    dragState=null;
+    if(onHub){
+      if(from==='hub'){ placeFile(false); setMsg('📁 resta sulla ☁️.'); return; }
+      flyTo('hub', true);
+      setMsg('📁 caricato sulla ☁️ dal '+DEV_NAMES[from]+'. Ora trascinalo su un altro dispositivo.');
       return;
     }
     if(hit){
-      const from=fileDevice;
-      fileDevice=hit;
-      dragState=null;
-      placeFile(true);
-      setMsg(from==='hub' ? ('📁 scaricato dal Cloud sul '+DEV_NAMES[hit]+'.') : (from===hit ? ('📁 sul '+DEV_NAMES[hit]+'.') : ('📁 trasferito via Cloud: '+(DEV_NAMES[from]||'☁️')+' → '+DEV_NAMES[hit]+'.')));
+      if(from===hit){ placeFile(false); return; }
+      if(from==='hub'){
+        flyTo(hit, true);
+        setMsg('📁 scaricato dal Cloud sul '+DEV_NAMES[hit]+'.');
+        return;
+      }
+      flyViaCloud(hit, '📁 trasferito via Cloud: '+DEV_NAMES[from]+' → ☁️ → '+DEV_NAMES[hit]+'.');
       return;
     }
-    dragState=null;
-    placeFile(true);
-    setMsg('Rilascia il 📁 sulla ☁️ o su un dispositivo.');
+    placeFile(false);
     return;
   }
   const u=document.getElementById('usb-token');
@@ -705,7 +754,7 @@ function endFileDrag(e){
     return;
   }
   dragState=null;
-  placeFile();
+  placeFile(false);
 }
 function bindUsb(u){
   u.addEventListener('pointerdown', e=>{
@@ -771,7 +820,8 @@ function saveFile(){
   updateNameUI();
 }
 function toggleCloud(){
-  if(busy) return;
+  if(busy || toggling) return;
+  toggling=true;
   cloudOn=!cloudOn;
   document.getElementById('cloud-toggle').textContent = cloudOn?'☁️ Cloud: ON':'☁️ Cloud: OFF';
   document.getElementById('cloud-hub').classList.toggle('on', cloudOn);
@@ -792,7 +842,7 @@ function toggleCloud(){
   } else {
     usb.hasFile=false;
     usb.connected=null;
-    drawLines('on');
+    requestAnimationFrame(()=>requestAnimationFrame(()=>drawLines('on')));
     placeUsbDefault();
     if(fileReady){
       setMsg('Cloud attivo. Trascina 📁 dal dispositivo alla ☁️, poi su un altro dispositivo.');
@@ -801,6 +851,7 @@ function toggleCloud(){
     }
   }
   highlightUsb();
+  setTimeout(()=>{ toggling=false; }, 920);
 }
 
 applyTheme(currentTheme);
@@ -809,11 +860,12 @@ animBg();
 initSphere();
 animSphere();
 bindLangTilt();
+refreshReveal();
 fileName=randomName();
 savedName=fileName;
 buildFolders();
 updateNameUI();
-window.addEventListener('resize', ()=>{ if(cloudOn) drawLines('on'); placeFile(); });
+window.addEventListener('resize', ()=>{ if(cloudOn) drawLines('on'); else drawLines('off-now'); placeFile(); });
 drawLines('on');
 placeUsbDefault();
 </script>
