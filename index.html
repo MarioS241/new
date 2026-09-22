@@ -21,18 +21,26 @@ html[data-bg-scene="forest"] #theme-bg-scene { background:repeating-linear-gradi
 html[data-bg-scene="hologram"] #theme-bg-scene { background:repeating-linear-gradient(90deg, transparent 0 92px, rgba(143,252,255,.1) 93px 95px), #02050d; }
 html[data-theme-group="neon"] body { text-shadow:0 0 18px color-mix(in srgb, var(--accent) 18%, transparent); }
 html[data-theme-group="futuristic"] .card { backdrop-filter:blur(10px); border-style:double; }
+html[data-role="guest"] .owner-only { display:none !important; }
 #gate { position:fixed; inset:0; z-index:4000; display:flex; align-items:center; justify-content:center; background:radial-gradient(circle at 20% 10%, rgba(0,255,136,.12), transparent 28%), linear-gradient(160deg,#050912,#08121d 55%,#050912); padding:20px; }
 #gate.hidden { display:none; }
-.gate-box { width:min(420px,94vw); background:var(--card); border:1px solid var(--border); border-radius:18px; padding:28px 24px; box-shadow:0 0 40px rgba(0,255,136,.12); }
+.gate-box { width:min(440px,94vw); background:var(--card); border:1px solid var(--border); border-radius:18px; padding:28px 24px; box-shadow:0 0 40px rgba(0,255,136,.12); }
 .gate-kicker { font-size:10px; letter-spacing:4px; color:var(--accent); margin-bottom:10px; }
 .gate-box h1 { font-family:var(--title); font-size:clamp(1.6rem,6vw,2.2rem); line-height:1.1; margin-bottom:10px; }
 .gate-box h1 span { color:var(--accent); }
 .gate-box p { color:var(--muted); font-size:12px; margin-bottom:18px; }
-.gate-row { display:flex; gap:8px; flex-wrap:wrap; }
+.gate-modes { display:grid; gap:10px; }
+.gate-mode { background:var(--bg3); border:1px solid var(--border); border-radius:12px; color:var(--text); padding:14px 16px; cursor:pointer; font-family:var(--mono); text-align:left; }
+.gate-mode:hover { border-color:var(--accent); color:var(--accent); }
+.gate-mode b { display:block; font-size:14px; margin-bottom:4px; }
+.gate-mode span { display:block; font-size:11px; color:var(--muted); font-weight:400; }
+.gate-row { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
 #gate-pass { flex:1; min-width:160px; background:var(--bg3); border:1px solid var(--border); border-radius:10px; color:var(--text); padding:12px 14px; font-family:var(--mono); font-size:14px; outline:none; }
 #gate-pass:focus { border-color:var(--accent); }
-#gate-go { background:var(--accent); color:#061018; border:none; border-radius:10px; padding:12px 18px; font-family:var(--mono); font-weight:700; cursor:pointer; }
+#gate-go, .gate-back { background:var(--accent); color:#061018; border:none; border-radius:10px; padding:12px 18px; font-family:var(--mono); font-weight:700; cursor:pointer; }
+.gate-back { background:var(--bg3); color:var(--muted); border:1px solid var(--border); }
 #gate-err { display:none; color:#f66; font-size:11px; margin-top:10px; }
+#owner-pass { display:none; }
 #menu-btn, #settings-btn { position:fixed; top:1rem; z-index:1000; background:var(--bg2); border:1px solid var(--border); color:var(--muted); width:40px; height:40px; border-radius:8px; cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center; }
 #menu-btn { left:1rem; }
 #settings-btn { left:4rem; }
@@ -52,31 +60,49 @@ html[data-theme-group="futuristic"] .card { backdrop-filter:blur(10px); border-s
 .theme-mode-btn.active { background:var(--accent); color:#061018; border-color:var(--accent); }
 .theme-btn { background:var(--bg3); border:1px solid var(--border); color:var(--muted); padding:8px 12px; border-radius:8px; cursor:pointer; font-family:var(--mono); font-size:12px; }
 .bg-slider { display:grid; grid-template-columns:86px 1fr 34px; gap:8px; align-items:center; margin:8px 0; font-size:11px; color:var(--muted); }
-#hero { position:relative; z-index:1; min-height:78vh; display:flex; flex-direction:column; justify-content:center; padding:5rem 1.25rem 3rem; max-width:920px; margin:0 auto; }
-.hero-eyebrow { font-size:11px; letter-spacing:4px; color:var(--accent); margin-bottom:14px; }
-#hero h1 { font-family:var(--title); font-size:clamp(2.1rem,8vw,4.4rem); line-height:.95; font-weight:800; }
-#hero h1 span { color:var(--accent); }
-.hero-sub { max-width:540px; color:var(--muted); margin-top:16px; }
-.scroll-hint { margin-top:2.5rem; font-size:11px; letter-spacing:4px; color:var(--muted); }
-section { position:relative; z-index:1; max-width:920px; margin:0 auto; padding:4.5rem 1.25rem 2.8rem; }
+section { position:relative; z-index:1; max-width:980px; margin:0 auto; padding:4.5rem 1.25rem 2.8rem; }
+#experiences { padding-top:5.5rem; }
+html[data-role="guest"] #cloud { padding-top:5.5rem; }
 .section-label { font-size:11px; letter-spacing:3px; color:var(--accent); margin-bottom:8px; }
 .section-title { font-family:var(--title); font-size:clamp(1.7rem,5vw,2.6rem); margin-bottom:10px; }
 .section-bridge { color:var(--muted); font-size:13px; margin-bottom:1.4rem; }
 .card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:18px; margin-bottom:12px; }
 .card h3 { font-family:var(--title); font-size:1.05rem; margin-bottom:8px; color:var(--accent); }
 .divider { text-align:center; color:var(--muted); opacity:.5; padding:.4rem 0; position:relative; z-index:1; }
-.fact-grid, .lang-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px; }
-.fact { background:var(--bg3); border:1px solid var(--border); border-radius:12px; padding:14px; }
-.fact b { display:block; color:var(--accent); font-size:11px; letter-spacing:2px; margin-bottom:6px; }
+.lang-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px; }
 .lang-chip { background:var(--bg3); border:1px solid var(--border); border-radius:12px; padding:16px; text-align:center; }
 .lang-chip strong { display:block; font-family:var(--title); font-size:1.2rem; }
-.cloud-wrap { background:var(--bg2); border:1px solid var(--border); border-radius:16px; padding:16px; overflow:hidden; }
+.cloud-lab { background:var(--bg2); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
+.explorer { background:#1b1b1b; border-bottom:1px solid #3a3a3a; color:#eee; font-family:Segoe UI, system-ui, sans-serif; }
+.exp-title { display:flex; align-items:center; justify-content:space-between; padding:8px 12px; background:#2b2b2b; font-size:13px; }
+.exp-title b { font-weight:600; }
+.exp-dots { display:flex; gap:6px; }
+.exp-dots i { width:10px; height:10px; border-radius:50%; display:block; background:#555; }
+.exp-toolbar { display:flex; gap:8px; align-items:center; padding:6px 10px; background:#202020; font-size:12px; flex-wrap:wrap; }
+.exp-toolbar button { background:#2d2d2d; border:1px solid #444; color:#ddd; border-radius:4px; padding:5px 10px; cursor:pointer; font-family:inherit; }
+.exp-addr { margin:0 10px 8px; background:#191919; border:1px solid #3d3d3d; border-radius:4px; padding:6px 10px; font-size:12px; color:#c8c8c8; }
+.exp-body { display:grid; grid-template-columns:160px 1fr; min-height:170px; }
+.exp-side { background:#252525; border-right:1px solid #3a3a3a; padding:8px 0; }
+.exp-side button { display:flex; width:100%; gap:8px; align-items:center; background:none; border:none; color:#ddd; padding:7px 12px; cursor:pointer; font-family:inherit; font-size:12px; text-align:left; }
+.exp-side button.active, .exp-side button:hover { background:#373737; }
+.exp-main { padding:10px 12px; }
+.exp-file { display:flex; align-items:center; gap:10px; width:100%; background:#2a2a2a; border:1px solid #444; border-radius:6px; padding:10px; color:#eee; cursor:text; font-family:inherit; text-align:left; }
+.exp-file:hover { border-color:#6aa; }
+.exp-file .fname { font-size:13px; letter-spacing:.3px; }
+.exp-foot { display:flex; gap:8px; align-items:center; flex-wrap:wrap; padding:10px; background:#2b2b2b; border-top:1px solid #3a3a3a; }
+.exp-foot label { font-size:12px; color:#bbb; }
+#file-name { flex:1; min-width:140px; background:#1a1a1a; border:1px solid #555; color:#fff; border-radius:4px; padding:7px 10px; font-family:var(--mono); font-size:12px; }
+.exp-foot select { background:#1a1a1a; border:1px solid #555; color:#ddd; border-radius:4px; padding:7px 8px; }
+.exp-save { background:#0e7a0e; border:1px solid #1a9a1a; color:#fff; border-radius:4px; padding:7px 16px; cursor:pointer; font-weight:700; }
+.exp-cancel { background:#3a3a3a; border:1px solid #555; color:#ddd; border-radius:4px; padding:7px 14px; cursor:pointer; }
+.cloud-wrap { padding:16px; }
 .cloud-top { display:flex; justify-content:space-between; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:12px; }
 .cloud-toggle { display:flex; align-items:center; gap:8px; background:var(--bg3); border:1px solid var(--border); border-radius:999px; padding:8px 12px; cursor:pointer; font-family:var(--mono); color:var(--text); }
-.cloud-stage { position:relative; min-height:460px; background:radial-gradient(circle at 50% 48%, rgba(0,170,255,.08), transparent 32%), var(--bg3); border:1px dashed var(--border); border-radius:14px; overflow:hidden; }
-.device { position:absolute; width:150px; height:118px; border:2px solid #8a97a8; border-radius:16px; background:rgba(138,151,168,.08); display:flex; flex-direction:column; align-items:center; padding:10px; color:#c5ced8; z-index:3; }
+.cloud-stage { position:relative; min-height:500px; background:radial-gradient(circle at 50% 48%, rgba(0,170,255,.08), transparent 32%), var(--bg3); border:1px dashed var(--border); border-radius:14px; overflow:hidden; }
+.device { position:absolute; width:150px; height:118px; border:2px solid #8a97a8; border-radius:16px; background:rgba(138,151,168,.08); display:flex; flex-direction:column; align-items:center; padding:10px; color:#c5ced8; z-index:3; transition:border-color .25s, box-shadow .25s; }
 .device svg { width:42px; height:42px; fill:none; stroke:#8a97a8; stroke-width:1.7; }
 .device span { font-size:11px; margin-top:6px; letter-spacing:1px; }
+.device.usb-in { border-color:#ffcc33; box-shadow:0 0 18px rgba(255,204,51,.4); }
 #dev-laptop { left:18px; top:28px; }
 #dev-phone { left:18px; bottom:28px; }
 #dev-tablet { right:18px; top:50%; transform:translateY(-50%); }
@@ -85,17 +111,30 @@ section { position:relative; z-index:1; max-width:920px; margin:0 auto; padding:
 #sphere-canvas { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
 .cloud-hub .hub-label { position:relative; z-index:2; font-size:10px; letter-spacing:2px; color:var(--muted); margin-top:4px; }
 .cloud-hub.on .hub-label { color:#9ad4ff; }
-.link-line { position:absolute; height:2px; background:#7a8796; z-index:1; transform-origin:left center; opacity:.7; }
-.link-line.on { background:#3aa0ff; box-shadow:0 0 10px rgba(58,160,255,.55); }
-.file-token { position:absolute; z-index:5; width:54px; height:54px; border-radius:12px; background:rgba(8,13,24,.86); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:28px; cursor:grab; user-select:none; touch-action:none; }
+.link-line { position:absolute; height:2px; background:#3aa0ff; z-index:1; transform-origin:left center; opacity:.85; box-shadow:0 0 10px rgba(58,160,255,.55); transition:background .4s, box-shadow .4s, opacity .8s .25s, filter .4s; }
+.link-line.shut { background:#6a737d; box-shadow:none; filter:grayscale(1); opacity:0; }
+.file-token { position:absolute; z-index:6; width:58px; min-height:58px; border-radius:12px; background:rgba(8,13,24,.92); border:1px solid var(--border); display:none; flex-direction:column; align-items:center; justify-content:center; font-size:26px; cursor:grab; user-select:none; touch-action:none; padding:4px 4px 6px; }
+.file-token.show { display:flex; }
 .file-token:active { cursor:grabbing; }
 .file-token.lock { border-color:#f66; box-shadow:0 0 16px rgba(255,102,102,.25); }
-.file-token.fly { transition:left .75s ease, top .75s ease; pointer-events:none; }
-#cloud-msg { min-height:42px; margin-top:10px; font-size:12px; color:var(--muted); line-height:1.6; }
+.file-token.fly { transition:left .8s cubic-bezier(.4,.1,.2,1), top .8s cubic-bezier(.4,.1,.2,1); pointer-events:none; }
+.file-token .flab { font-size:8px; letter-spacing:0; color:var(--muted); max-width:54px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.usb-token { position:absolute; z-index:7; width:86px; height:40px; border-radius:4px 12px 12px 4px; background:linear-gradient(180deg,#d9dee4,#9aa3ad); color:#1a1a1a; display:none; align-items:center; justify-content:center; gap:4px; font-size:11px; font-weight:700; letter-spacing:1px; cursor:grab; user-select:none; touch-action:none; box-shadow:2px 3px 0 #5b636b; }
+.usb-token.show { display:flex; }
+.usb-token:active { cursor:grabbing; }
+.usb-token.has { background:linear-gradient(180deg,#ffe08a,#e0b43a); }
+#cloud-msg { min-height:48px; margin-top:10px; font-size:12px; color:var(--muted); line-height:1.6; }
+.compare { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:12px; margin-top:16px; }
+.compare ul { margin:8px 0 0 18px; color:var(--text); font-size:13px; }
+.compare h4 { font-size:11px; letter-spacing:2px; margin-top:12px; }
+.compare h4.good { color:var(--accent); }
+.compare h4.bad { color:#f88; }
 footer { position:relative; z-index:1; text-align:center; padding:3rem 1rem 4rem; color:var(--muted); font-size:12px; }
 footer span { color:var(--accent); }
 @media (max-width:700px) {
-  .cloud-stage { min-height:580px; }
+  .exp-body { grid-template-columns:1fr; }
+  .exp-side { display:flex; overflow-x:auto; border-right:none; border-bottom:1px solid #3a3a3a; }
+  .cloud-stage { min-height:620px; }
   #dev-laptop { left:12px; top:16px; width:132px; }
   #dev-phone { left:12px; bottom:16px; width:132px; }
   #dev-tablet { right:12px; top:auto; bottom:170px; transform:none; width:132px; }
@@ -110,12 +149,19 @@ footer span { color:var(--accent); }
   <div class="gate-box">
     <div class="gate-kicker">PORTFOLIO · ACCESSO</div>
     <h1>Mario S.<br><span>digitale</span></h1>
-    <p>Sito personale protetto. Inserisci la password per entrare.</p>
-    <div class="gate-row">
-      <input id="gate-pass" type="password" placeholder="Password" autocomplete="off">
-      <button id="gate-go" onclick="tryUnlock()">Entra</button>
+    <p id="gate-intro">Due modi per entrare: proprietario con password, oppure ospite solo sul Cloud.</p>
+    <div class="gate-modes" id="gate-modes">
+      <button class="gate-mode" onclick="chooseOwner()"><b>🔑 Proprietario</b><span>Richiede la password · percorso completo</span></button>
+      <button class="gate-mode" onclick="enterGuest()"><b>👤 Ospite</b><span>Senza password · solo la sezione Cloud</span></button>
     </div>
-    <div id="gate-err">Password errata.</div>
+    <div id="owner-pass">
+      <div class="gate-row">
+        <input id="gate-pass" type="password" placeholder="Password" autocomplete="off">
+        <button id="gate-go" onclick="tryUnlock()">Entra</button>
+        <button class="gate-back" onclick="backGate()">Indietro</button>
+      </div>
+      <div id="gate-err">Password errata.</div>
+    </div>
   </div>
 </div>
 <button id="menu-btn" onclick="toggleMenu()" title="Apri menu">☰</button>
@@ -126,35 +172,12 @@ footer span { color:var(--accent); }
 <nav id="side-menu">
   <button id="menu-close" onclick="closeMenu()">✕</button>
   <h3>Sezioni</h3>
-  <a class="menu-item" href="#about" onclick="closeMenu()"><span>👤</span> Abt Me</a>
-  <a class="menu-item" href="#experiences" onclick="closeMenu()"><span>💻</span> My experiences</a>
+  <a class="menu-item owner-only" href="#experiences" onclick="closeMenu()"><span>💻</span> My experiences</a>
   <a class="menu-item" href="#cloud" onclick="closeMenu()"><span>☁️</span> Cloud</a>
-  <a class="menu-item" href="#credits" onclick="closeMenu()"><span>❤️</span> Crediti</a>
+  <a class="menu-item owner-only" href="#credits" onclick="closeMenu()"><span>❤️</span> Crediti</a>
 </nav>
-<div id="hero">
-  <div class="hero-eyebrow">PORTFOLIO PERSONALE</div>
-  <h1>Mario S.<br>in modo <span>digitale</span></h1>
-  <p class="hero-sub">Tre sezioni: chi sono, cosa sto imparando e una sfera interattiva sul Cloud. Stesso stile della tesina, ma questo sito è autonomo.</p>
-  <div class="scroll-hint">SCORRI</div>
-</div>
-<section id="about">
-  <div class="section-label">01 — ABT ME</div>
-  <div class="section-title">Chi sono</div>
-  <div class="section-bridge">Poche informazioni, chiare: identità, sport, famiglia e animali.</div>
-  <div class="card">
-    <h3>Mario S.</h3>
-    <p>Mi chiamo Mario S., ho 15 anni e pratico basket. Ho due fratelli, due cocorite e l'altro rainbow.</p>
-  </div>
-  <div class="fact-grid">
-    <div class="fact"><b>ETÀ</b>15 anni</div>
-    <div class="fact"><b>SPORT</b>Basket</div>
-    <div class="fact"><b>FAMIGLIA</b>Due fratelli</div>
-    <div class="fact"><b>ANIMALI</b>Due cocorite e l'altro rainbow</div>
-  </div>
-</section>
-<div class="divider">▼</div>
-<section id="experiences">
-  <div class="section-label">02 — MY EXPERIENCES</div>
+<section id="experiences" class="owner-only">
+  <div class="section-label">01 — MY EXPERIENCES</div>
   <div class="section-title">Il mio percorso</div>
   <div class="section-bridge">Linguaggi che sto imparando e perché ho scelto l'informatica.</div>
   <div class="card">
@@ -172,54 +195,131 @@ footer span { color:var(--accent); }
     <p>Ho scelto l'indirizzo d'Informatica Quadriennale per come si è notato cercando di imparare altre lingue e proseguire quelle iniziate, per poi usarle nei progetti personali come questo e la mia tesina delle medie.</p>
   </div>
 </section>
-<div class="divider">▼</div>
+<div class="divider owner-only">▼</div>
 <section id="cloud">
-  <div class="section-label">03 — CLOUD</div>
+  <div class="section-label">CLOUD</div>
   <div class="section-title">☁️ Cloud</div>
-  <div class="section-bridge">Il Cloud è spazio su internet. I file locali restano su un solo dispositivo; con la sfera accesa lo stesso file viaggia tra laptop, telefono e tablet. Se lo lasci sulla nuvola, viene portato sul PC.</div>
-  <div class="card">
-    <h3>Sfera interattiva</h3>
-    <p>Trascina il <strong>📁 File</strong>. Cloud <strong>ON</strong>: passa dalla sfera ☁️ e, se resta sulla nuvola, viene portato sul PC. Cloud <strong>OFF</strong>: tocca il confine e diventa 🔒.</p>
-  </div>
-  <div class="cloud-wrap">
-    <div class="cloud-top">
-      <button class="cloud-toggle" id="cloud-toggle" onclick="toggleCloud()">☁️ Cloud: ON</button>
-      <span style="font-size:11px;color:var(--muted)">Trascina 📁 · clicca la sfera</span>
-    </div>
-    <div class="cloud-stage" id="cloud-stage">
-      <div class="cloud-hub on" id="cloud-hub" onclick="toggleCloud()">
-        <canvas id="sphere-canvas"></canvas>
-        <small class="hub-label">CLOUD</small>
+  <div class="section-bridge">Salva un file, accendi o spegni il Cloud, usa la USB quando è locale.</div>
+  <div class="cloud-lab">
+    <div class="explorer">
+      <div class="exp-title"><b>Esplora file</b><div class="exp-dots"><i></i><i></i><i></i></div></div>
+      <div class="exp-toolbar">
+        <button type="button">Organizza</button>
+        <button type="button" onclick="newRandomName()">Nuova cartella</button>
+        <button type="button">Visualizza</button>
       </div>
-      <div class="device" id="dev-laptop"><svg viewBox="0 0 48 48"><rect x="10" y="10" width="28" height="18" rx="2"/><path d="M6 34h36l-3-5H9z"/></svg><span>LAPTOP</span></div>
-      <div class="device" id="dev-phone"><svg viewBox="0 0 48 48"><rect x="16" y="6" width="16" height="36" rx="3"/><path d="M22 38h4"/></svg><span>TELEFONO</span></div>
-      <div class="device" id="dev-tablet"><svg viewBox="0 0 48 48"><rect x="10" y="6" width="28" height="36" rx="3"/><path d="M21 38h6"/></svg><span>TABLET</span></div>
+      <div class="exp-addr" id="exp-addr">Questo PC ▸ Documenti</div>
+      <div class="exp-body">
+        <div class="exp-side" id="exp-side"></div>
+        <div class="exp-main">
+          <button class="exp-file" id="exp-file-row" onclick="focusRename()">
+            <span>📄</span>
+            <span class="fname" id="exp-file-label"></span>
+          </button>
+        </div>
+      </div>
+      <div class="exp-foot">
+        <label for="file-name">Nome file:</label>
+        <input id="file-name" maxlength="24" spellcheck="false">
+        <select aria-label="Tipo file"><option>File (*.file)</option></select>
+        <button class="exp-save" type="button" onclick="saveFile()">Salva</button>
+        <button class="exp-cancel" type="button" onclick="cancelRename()">Annulla</button>
+      </div>
     </div>
-    <div id="cloud-msg">Il file 📁 parte dal laptop. Accendi il Cloud per trasferirlo.</div>
+    <div class="cloud-wrap">
+      <div class="cloud-top">
+        <button class="cloud-toggle" id="cloud-toggle" onclick="toggleCloud()">☁️ Cloud: ON</button>
+        <span style="font-size:11px;color:var(--muted)">Salva il file · USB se il Cloud è OFF</span>
+      </div>
+      <div class="cloud-stage" id="cloud-stage">
+        <div class="cloud-hub on" id="cloud-hub">
+          <canvas id="sphere-canvas"></canvas>
+          <small class="hub-label">CLOUD</small>
+        </div>
+        <div class="device" id="dev-laptop"><svg viewBox="0 0 48 48"><rect x="10" y="10" width="28" height="18" rx="2"/><path d="M6 34h36l-3-5H9z"/></svg><span>LAPTOP</span></div>
+        <div class="device" id="dev-phone"><svg viewBox="0 0 48 48"><rect x="16" y="6" width="16" height="36" rx="3"/><path d="M22 38h4"/></svg><span>TELEFONO</span></div>
+        <div class="device" id="dev-tablet"><svg viewBox="0 0 48 48"><rect x="10" y="6" width="28" height="36" rx="3"/><path d="M21 38h6"/></svg><span>TABLET</span></div>
+      </div>
+      <div id="cloud-msg">Salva un file dall'Esplora file. Con il Cloud ON resta sulla ☁️. Con il Cloud OFF va su un dispositivo a caso e si sposta solo con la USB.</div>
+    </div>
+  </div>
+  <div class="compare">
+    <div class="card">
+      <h3>☁️ Cloud</h3>
+      <h4 class="good">3 VANTAGGI</h4>
+      <ul>
+        <li>Stesso file da laptop, telefono e tablet, senza cavi.</li>
+        <li>Se un dispositivo si rompe, il file resta sulla nuvola.</li>
+        <li>Condividi e aggiorni da ovunque ci sia internet.</li>
+      </ul>
+      <h4 class="bad">3 SVANTAGGI</h4>
+      <ul>
+        <li>Senza connessione non apri i file nel Cloud.</li>
+        <li>I dati stanno su server di altri: meno controllo.</li>
+        <li>Spazio limitato o a pagamento.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>💻 File locali</h3>
+      <h4 class="good">3 VANTAGGI</h4>
+      <ul>
+        <li>Funzionano anche offline, sul tuo dispositivo.</li>
+        <li>I file restano solo da te: più privacy.</li>
+        <li>Nessun abbonamento per conservarli.</li>
+      </ul>
+      <h4 class="bad">3 SVANTAGGI</h4>
+      <ul>
+        <li>Stanno su un solo dispositivo alla volta.</li>
+        <li>Per spostarli serve USB, cavo o chiavetta.</li>
+        <li>Se il dispositivo si rompe, puoi perdere tutto.</li>
+      </ul>
+    </div>
   </div>
 </section>
-<div class="divider">▼</div>
-<section id="credits">
-  <div class="section-label">04 — CREDITI</div>
+<div class="divider owner-only">▼</div>
+<section id="credits" class="owner-only">
+  <div class="section-label">CREDITI</div>
   <div class="section-title">Crediti</div>
   <div class="card">
     <h3>Realizzato da</h3>
     <p><strong>Mario S.</strong> (MarioS241) — progetto, codice e contenuti.</p>
-    <p style="margin-top:8px">Stile ispirato alla tesina <em>Informatica in Modo Digitale</em>. Sito single-file, senza librerie esterne: solo HTML, CSS e JavaScript.</p>
+    <p style="margin-top:8px">Stile ispirato alla tesina <em>Informatica in Modo Digitale</em>. Sito single-file: solo HTML, CSS e JavaScript.</p>
     <p style="margin-top:8px">GitHub: <strong>marios241.github</strong></p>
   </div>
 </section>
 <footer>
   <p>Made with <span>❤️</span> by <strong>MarioS</strong> · Anno scolastico 2026</p>
-  <p style="margin-top:6px">Portfolio personale · marios241.github</p>
+  <p class="owner-only" style="margin-top:6px">Portfolio personale · marios241.github</p>
 </footer>
 <script>
 const GATE_PASSWORD = 'marios241.github';
+function chooseOwner(){
+  document.getElementById('gate-modes').style.display='none';
+  document.getElementById('owner-pass').style.display='block';
+  document.getElementById('gate-intro').textContent='Accesso proprietario. Inserisci la password.';
+  document.getElementById('gate-pass').focus();
+}
+function backGate(){
+  document.getElementById('gate-modes').style.display='grid';
+  document.getElementById('owner-pass').style.display='none';
+  document.getElementById('gate-intro').textContent='Due modi per entrare: proprietario con password, oppure ospite solo sul Cloud.';
+  document.getElementById('gate-err').style.display='none';
+}
 function tryUnlock(){
-  const inp = document.getElementById('gate-pass');
-  const v = ((inp&&inp.value)||'').trim();
-  if(v === GATE_PASSWORD){ document.getElementById('gate').classList.add('hidden'); }
-  else { document.getElementById('gate-err').style.display='block'; if(inp) inp.value=''; }
+  const inp=document.getElementById('gate-pass');
+  const v=((inp&&inp.value)||'').trim();
+  if(v===GATE_PASSWORD){
+    document.documentElement.dataset.role='owner';
+    document.getElementById('gate').classList.add('hidden');
+  } else {
+    document.getElementById('gate-err').style.display='block';
+    if(inp) inp.value='';
+  }
+}
+function enterGuest(){
+  document.documentElement.dataset.role='guest';
+  document.getElementById('gate').classList.add('hidden');
+  location.hash='#cloud';
 }
 document.getElementById('gate-pass').addEventListener('keydown', e=>{ if(e.key==='Enter') tryUnlock(); });
 function toggleMenu(){ const o=document.getElementById('side-menu').classList.toggle('open'); document.getElementById('overlay').classList.toggle('show',o); }
@@ -318,7 +418,6 @@ function animBg(){
   }
   requestAnimationFrame(animBg);
 }
-
 let spherePts=[], sphereRot=0;
 function initSphere(){
   spherePts=[];
@@ -358,41 +457,136 @@ function animSphere(){
   requestAnimationFrame(animSphere);
 }
 
-let cloudOn=true, fileDevice='laptop', dragState=null, lockTimer=null, deliverTimer=null;
+const FOLDERS=[['🏠','Home','Questo PC ▸ Home'],['🖥️','Desktop','Questo PC ▸ Desktop'],['⬇️','Download','Questo PC ▸ Download'],['📁','Documenti','Questo PC ▸ Documenti'],['🖼️','Immagini','Questo PC ▸ Immagini'],['🎵','Musica','Questo PC ▸ Musica'],['🎬','Video','Questo PC ▸ Video']];
 const DEV_NAMES={laptop:'Laptop', phone:'Telefono', tablet:'Tablet'};
-const LOCK_MSG='🔒 I file locali non possono essere trasferiti da dispositivo a dispositivo senza un collegamento fisico tramite chiavetta USB o cavo';
+const LOCK_MSG='🔒 File locale: senza Cloud non si sposta da solo. Collega una 💾 USB, metti il 📁 dentro e spostala su un altro dispositivo.';
+let cloudOn=true, fileReady=false, fileDevice='hub', fileName='', savedName='';
+let dragState=null, usbDrag=null, lockTimer=null, busy=false;
+let usb={connected:null, hasFile:false};
+function randomName(){ let s=''; for(let i=0;i<15;i++) s+=String.fromCharCode(97+Math.floor(Math.random()*26)); return s; }
+function randomDevice(){ return ['laptop','phone','tablet'][Math.floor(Math.random()*3)]; }
 function setMsg(t){ const m=document.getElementById('cloud-msg'); if(m) m.textContent=t; }
+function updateNameUI(){
+  const inp=document.getElementById('file-name');
+  const lab=document.getElementById('exp-file-label');
+  if(inp) inp.value=fileName;
+  if(lab) lab.textContent=fileName+'.file';
+  const cap=document.querySelector('#file-token .flab');
+  if(cap) cap.textContent=fileName+'.file';
+}
+function newRandomName(){ fileName=randomName(); if(!fileReady) savedName=fileName; updateNameUI(); }
+function focusRename(){ document.getElementById('file-name').focus(); document.getElementById('file-name').select(); }
+function cancelRename(){ fileName=savedName||fileName; updateNameUI(); }
+function buildFolders(){
+  const side=document.getElementById('exp-side');
+  side.innerHTML=FOLDERS.map((f,i)=>`<button type="button" class="${i===3?'active':''}" data-i="${i}">${f[0]} ${f[1]}</button>`).join('');
+  side.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    side.querySelectorAll('button').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    document.getElementById('exp-addr').textContent=FOLDERS[+b.dataset.i][2];
+  });
+}
+document.getElementById('file-name').addEventListener('input', e=>{
+  fileName=(e.target.value||'').replace(/[^a-zA-Z0-9_-]/g,'').slice(0,24);
+  e.target.value=fileName;
+  const lab=document.getElementById('exp-file-label');
+  if(lab) lab.textContent=(fileName||'senza-nome')+'.file';
+});
 function centerOf(el){ const s=document.getElementById('cloud-stage').getBoundingClientRect(); const r=el.getBoundingClientRect(); return { x:r.left-s.left+r.width/2, y:r.top-s.top+r.height/2 }; }
-function drawLines(){
+function stagePos(e){ const s=document.getElementById('cloud-stage').getBoundingClientRect(); return { x:e.clientX-s.left, y:e.clientY-s.top }; }
+function pointIn(el, sp){ const s=document.getElementById('cloud-stage').getBoundingClientRect(); const r=el.getBoundingClientRect(); return sp.x>=r.left-s.left && sp.x<=r.right-s.left && sp.y>=r.top-s.top && sp.y<=r.bottom-s.top; }
+function drawLines(mode){
   const stage=document.getElementById('cloud-stage');
   if(!stage) return;
+  if(mode==='off-now'){ stage.querySelectorAll('.link-line').forEach(l=>l.remove()); return; }
+  if(mode==='shut'){
+    stage.querySelectorAll('.link-line').forEach(l=>l.classList.add('shut'));
+    setTimeout(()=>stage.querySelectorAll('.link-line').forEach(l=>l.remove()), 900);
+    return;
+  }
   stage.querySelectorAll('.link-line').forEach(l=>l.remove());
+  if(!cloudOn) return;
   const hc=centerOf(document.getElementById('cloud-hub'));
   ['laptop','phone','tablet'].forEach(id=>{
     const c=centerOf(document.getElementById('dev-'+id));
     const dx=hc.x-c.x, dy=hc.y-c.y, len=Math.hypot(dx,dy);
     const line=document.createElement('div');
-    line.className='link-line'+(cloudOn?' on':'');
+    line.className='link-line';
     line.style.left=c.x+'px'; line.style.top=c.y+'px'; line.style.width=len+'px';
     line.style.transform='rotate('+Math.atan2(dy,dx)+'rad)';
     stage.appendChild(line);
   });
 }
-function placeFile(){
+function fileEl(){
   const stage=document.getElementById('cloud-stage');
-  if(!stage) return;
   let f=document.getElementById('file-token');
-  if(!f){ f=document.createElement('div'); f.id='file-token'; f.className='file-token'; f.textContent='📁'; stage.appendChild(f); bindFile(f); }
+  if(!f){
+    f=document.createElement('div');
+    f.id='file-token';
+    f.className='file-token';
+    f.innerHTML='📁<span class="flab"></span>';
+    stage.appendChild(f);
+    bindFile(f);
+  }
+  return f;
+}
+function usbEl(){
+  const stage=document.getElementById('cloud-stage');
+  let u=document.getElementById('usb-token');
+  if(!u){
+    u=document.createElement('div');
+    u.id='usb-token';
+    u.className='usb-token';
+    u.innerHTML='💾 USB';
+    stage.appendChild(u);
+    bindUsb(u);
+  }
+  return u;
+}
+function placeUsbDefault(){
+  const u=usbEl();
+  const st=document.getElementById('cloud-stage');
+  if(!cloudOn){ u.classList.add('show'); } else { u.classList.remove('show'); return; }
+  if(usb.connected){
+    const c=centerOf(document.getElementById('dev-'+usb.connected));
+    u.style.left=(c.x-43)+'px'; u.style.top=(c.y+28)+'px';
+  } else {
+    u.style.left=((st.clientWidth/2)-43)+'px';
+    u.style.top=(st.clientHeight-56)+'px';
+  }
+  u.classList.toggle('has', usb.hasFile);
+  u.innerHTML = usb.hasFile ? '💾📁 USB' : '💾 USB';
+}
+function placeFile(animate){
+  const f=fileEl();
+  updateNameUI();
+  if(!fileReady || usb.hasFile){ f.classList.remove('show'); placeUsbDefault(); highlightUsb(); return; }
+  f.classList.add('show');
   let c;
   if(fileDevice==='hub') c=centerOf(document.getElementById('cloud-hub'));
   else c=centerOf(document.getElementById('dev-'+fileDevice));
-  f.style.left=(c.x-27)+'px'; f.style.top=(c.y-16)+'px';
+  if(animate) f.classList.add('fly'); else f.classList.remove('fly');
+  f.style.left=(c.x-29)+'px'; f.style.top=(c.y-22)+'px';
+  if(animate) setTimeout(()=>f.classList.remove('fly'), 820);
+  placeUsbDefault();
+  highlightUsb();
 }
-function stagePos(e){ const s=document.getElementById('cloud-stage').getBoundingClientRect(); return { x:e.clientX-s.left, y:e.clientY-s.top }; }
-function pointIn(el, sp){ const s=document.getElementById('cloud-stage').getBoundingClientRect(); const r=el.getBoundingClientRect(); return sp.x>=r.left-s.left && sp.x<=r.right-s.left && sp.y>=r.top-s.top && sp.y<=r.bottom-s.top; }
+function highlightUsb(){
+  ['laptop','phone','tablet'].forEach(id=>{
+    document.getElementById('dev-'+id).classList.toggle('usb-in', usb.connected===id);
+  });
+}
+function showLock(){
+  const f=fileEl();
+  f.classList.add('lock'); f.firstChild && (f.childNodes[0].textContent='🔒');
+  setMsg(LOCK_MSG);
+  clearTimeout(lockTimer);
+  lockTimer=setTimeout(()=>{ f.classList.remove('lock'); if(f.childNodes[0]) f.childNodes[0].textContent='📁'; lockTimer=null; }, 2600);
+}
 function bindFile(f){
   f.addEventListener('pointerdown', e=>{
-    if(lockTimer || deliverTimer) return;
+    if(busy || lockTimer || !fileReady || usb.hasFile) return;
+    if(cloudOn){ setMsg('☁️ Cloud attivo: il file resta sulla nuvola finché non lo spegni.'); return; }
     const sp=stagePos(e);
     dragState={ ox:sp.x-f.offsetLeft, oy:sp.y-f.offsetTop, warned:false };
     try{ f.setPointerCapture(e.pointerId); }catch(err){}
@@ -401,11 +595,13 @@ function bindFile(f){
     if(!dragState) return;
     const sp=stagePos(e), st=document.getElementById('cloud-stage');
     let x=sp.x-dragState.ox, y=sp.y-dragState.oy;
-    const maxX=st.clientWidth-54, maxY=st.clientHeight-54;
-    if(cloudOn){ x=Math.max(0,Math.min(maxX,x)); y=Math.max(0,Math.min(maxY,y)); }
-    else {
-      const d=document.getElementById('dev-'+fileDevice), s=st.getBoundingClientRect(), r=d.getBoundingClientRect();
-      const bx1=r.left-s.left, by1=r.top-s.top, bx2=r.right-s.left-54, by2=r.bottom-s.top-54;
+    const d=document.getElementById('dev-'+fileDevice), s=st.getBoundingClientRect(), r=d.getBoundingClientRect();
+    const canUsb = usb.connected===fileDevice;
+    if(canUsb){
+      x=Math.max(0, Math.min(st.clientWidth-58, x));
+      y=Math.max(0, Math.min(st.clientHeight-58, y));
+    } else {
+      const bx1=r.left-s.left, by1=r.top-s.top, bx2=r.right-s.left-58, by2=r.bottom-s.top-58;
       if(x<bx1-2||x>bx2+2||y<by1-2||y>by2+2){
         if(!dragState.warned){ dragState.warned=true; showLock(); }
         x=Math.max(bx1,Math.min(bx2,x)); y=Math.max(by1,Math.min(by2,y));
@@ -413,72 +609,136 @@ function bindFile(f){
     }
     f.style.left=x+'px'; f.style.top=y+'px';
   });
-  f.addEventListener('pointerup', endDrag);
-  f.addEventListener('pointercancel', endDrag);
+  f.addEventListener('pointerup', endFileDrag);
+  f.addEventListener('pointercancel', endFileDrag);
 }
-function showLock(){
-  const f=document.getElementById('file-token');
-  if(!f) return;
-  f.classList.add('lock'); f.textContent='🔒'; setMsg(LOCK_MSG);
-  lockTimer=setTimeout(()=>{ f.classList.remove('lock'); f.textContent='📁'; lockTimer=null; }, 2800);
-}
-function deliverToPc(){
-  const f=document.getElementById('file-token');
-  if(!f || !cloudOn) return;
-  fileDevice='hub';
-  placeFile();
-  setMsg('☁️ File sulla nuvola... viene portato sul PC.');
-  clearTimeout(deliverTimer);
-  deliverTimer=setTimeout(()=>{
-    const pc=centerOf(document.getElementById('dev-laptop'));
-    f.classList.add('fly');
-    f.style.left=(pc.x-27)+'px';
-    f.style.top=(pc.y-16)+'px';
-    deliverTimer=setTimeout(()=>{
-      f.classList.remove('fly');
-      fileDevice='laptop';
-      placeFile();
-      deliverTimer=null;
-      setMsg('📁 File portato dal Cloud sul PC (Laptop). Ora è sul dispositivo.');
-    }, 760);
-  }, 700);
-}
-function endDrag(e){
+function endFileDrag(e){
   if(!dragState) return;
   const sp=stagePos(e);
-  if(cloudOn){
-    const hub=document.getElementById('cloud-hub');
-    let hit=null;
-    ['laptop','phone','tablet'].forEach(id=>{ if(pointIn(document.getElementById('dev-'+id), sp)) hit=id; });
-    if(pointIn(hub, sp) && !hit){
-      dragState=null;
-      deliverToPc();
-      return;
-    } else if(hit){
-      const from=fileDevice; fileDevice=hit;
-      setMsg(from==='hub' ? ('📁 File scaricato dal Cloud su '+DEV_NAMES[hit]+'.') : ('📁 File trasferito via Cloud: '+DEV_NAMES[from]+' → '+DEV_NAMES[hit]+'.'));
-    } else setMsg('📁 File trascinato: rilascialo su un dispositivo o sulla sfera ☁️.');
-  } else {
-    setMsg(LOCK_MSG+'.');
+  const u=document.getElementById('usb-token');
+  if(!cloudOn && usb.connected===fileDevice && u && pointIn(u, sp)){
+    usb.hasFile=true;
+    fileDevice='usb';
+    dragState=null;
+    placeFile();
+    setMsg('📁 è nella 💾 USB. Sposta la chiavetta su un altro dispositivo e collegala per copiare il file.');
+    return;
   }
-  dragState=null; placeFile();
+  dragState=null;
+  placeFile();
+}
+function bindUsb(u){
+  u.addEventListener('pointerdown', e=>{
+    if(busy || cloudOn) return;
+    const sp=stagePos(e);
+    usbDrag={ ox:sp.x-u.offsetLeft, oy:sp.y-u.offsetTop };
+    usb.connected=null;
+    highlightUsb();
+    try{ u.setPointerCapture(e.pointerId); }catch(err){}
+  });
+  u.addEventListener('pointermove', e=>{
+    if(!usbDrag) return;
+    const sp=stagePos(e), st=document.getElementById('cloud-stage');
+    let x=Math.max(0, Math.min(st.clientWidth-86, sp.x-usbDrag.ox));
+    let y=Math.max(0, Math.min(st.clientHeight-40, sp.y-usbDrag.oy));
+    u.style.left=x+'px'; u.style.top=y+'px';
+  });
+  u.addEventListener('pointerup', endUsbDrag);
+  u.addEventListener('pointercancel', endUsbDrag);
+}
+function endUsbDrag(e){
+  if(!usbDrag) return;
+  const sp=stagePos(e);
+  let hit=null;
+  ['laptop','phone','tablet'].forEach(id=>{ if(pointIn(document.getElementById('dev-'+id), sp)) hit=id; });
+  usbDrag=null;
+  if(hit){
+    usb.connected=hit;
+    if(usb.hasFile){
+      usb.hasFile=false;
+      fileDevice=hit;
+      placeFile(true);
+      setMsg('USB collegata al '+DEV_NAMES[hit]+'. 📁 copiato sul '+DEV_NAMES[hit]+' tramite chiavetta.');
+    } else {
+      placeUsbDefault();
+      if(fileReady && fileDevice===hit){
+        setMsg('USB collegata al '+DEV_NAMES[hit]+'. Trascina il 📁 sulla 💾 per metterlo dentro.');
+      } else {
+        setMsg('USB collegata al '+DEV_NAMES[hit]+'. Per copiare, il file deve essere su questo dispositivo.');
+      }
+    }
+  } else {
+    usb.connected=null;
+    placeUsbDefault();
+    setMsg('USB scollegata. Trascinala su un dispositivo per collegarla.');
+  }
+  highlightUsb();
+}
+function saveFile(){
+  if(!fileName) fileName=randomName();
+  savedName=fileName;
+  fileReady=true;
+  usb.hasFile=false;
+  if(cloudOn){
+    fileDevice='hub';
+    placeFile(true);
+    setMsg('File salvato: '+fileName+'.file. Cloud ON → resta sulla ☁️ finché non lo spegni.');
+  } else {
+    fileDevice=randomDevice();
+    placeFile(true);
+    setMsg('File salvato: '+fileName+'.file. Cloud OFF → è sul '+DEV_NAMES[fileDevice]+'. Per spostarlo usa la 💾 USB.');
+  }
+  updateNameUI();
 }
 function toggleCloud(){
-  if(deliverTimer) return;
+  if(busy) return;
   cloudOn=!cloudOn;
   document.getElementById('cloud-toggle').textContent = cloudOn?'☁️ Cloud: ON':'☁️ Cloud: OFF';
   document.getElementById('cloud-hub').classList.toggle('on', cloudOn);
-  drawLines();
-  setMsg(cloudOn ? 'Cloud attivo: il 📁 File può viaggiare tra i dispositivi. Se lo lasci sulla nuvola, viene portato sul PC.' : 'Cloud spento: file locali. Prova a trascinare 📁 fuori dal dispositivo.');
+  if(!cloudOn){
+    drawLines('shut');
+    usb.connected=null;
+    if(fileReady && (fileDevice==='hub' || usb.hasFile)){
+      usb.hasFile=false;
+      busy=true;
+      fileDevice=randomDevice();
+      placeFile(true);
+      setMsg('Cloud disattivato. Collegamento spento (linee grigie, poi spariscono). 📁 portato a caso sul '+DEV_NAMES[fileDevice]+'.');
+      setTimeout(()=>{ busy=false; }, 850);
+    } else {
+      placeUsbDefault();
+      setMsg('Cloud spento: niente collegamento in rete. I file locali si spostano solo con la 💾 USB.');
+    }
+  } else {
+    usb.hasFile=false;
+    usb.connected=null;
+    drawLines('on');
+    if(fileReady){
+      busy=true;
+      fileDevice='hub';
+      placeFile(true);
+      setMsg('Cloud attivo. 📁 resta sulla ☁️ finché non disattivi il Cloud.');
+      setTimeout(()=>{ busy=false; }, 850);
+    } else {
+      placeUsbDefault();
+      setMsg('Cloud attivo. Salva un file: resterà sulla nuvola.');
+    }
+  }
+  highlightUsb();
 }
+
 applyTheme(currentTheme);
 initParticles();
 animBg();
 initSphere();
 animSphere();
-window.addEventListener('resize', ()=>{ drawLines(); placeFile(); });
-drawLines();
-placeFile();
+fileName=randomName();
+savedName=fileName;
+buildFolders();
+updateNameUI();
+window.addEventListener('resize', ()=>{ if(cloudOn) drawLines('on'); placeFile(); });
+drawLines('on');
+placeUsbDefault();
 </script>
 </body>
 </html>
